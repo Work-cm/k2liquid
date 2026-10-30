@@ -219,55 +219,51 @@ export default function FAQPage() {
   });
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <div className="min-h-screen bg-night-900 pb-20">
+      <div className="wrap max-w-4xl py-12 sm:py-16">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-900 mb-8">
-          <Link href="/" className="hover:text-gray-900">Home</Link>
+        <nav className="mb-8 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint" aria-label="Breadcrumb">
+          <Link href="/" className="transition-colors hover:text-volt">Home</Link>
           <span>/</span>
-          <span className="text-gray-900">FAQ</span>
-        </div>
+          <span className="text-bone-muted">FAQ</span>
+        </nav>
 
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 text-sky-400 text-sm font-medium mb-4">
-            <FaQuestionCircle className="text-xs" />
-            Support Center
-          </div>
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-3">Frequently Asked Questions</h1>
-          <p className="text-gray-900 text-base max-w-xl mx-auto">
+        <div className="mb-12 border-b border-line pb-10">
+          <p className="tag mb-4">support.center</p>
+          <h1 className="h-display mb-3 text-4xl sm:text-5xl">Frequently asked questions</h1>
+          <p className="max-w-xl text-base text-bone-muted">
             Find answers to common questions about products, ordering, shipping, and more.
           </p>
         </div>
 
         {/* Search Bar */}
         <div className="mb-6">
-          <div className="relative max-w-xl mx-auto">
-            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-900 text-xs" />
+          <div className="relative">
+            <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-xs text-bone-faint" />
             <input
               type="text"
               placeholder="Search questions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-gray-50/60 border border-gray-700/50 text-gray-900 rounded-xl py-3 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-sky-500 placeholder-gray-600 text-sm"
+              className="field pl-10"
             />
           </div>
         </div>
 
         {/* Category Pills */}
         <div className="mb-8">
-          <div className="flex flex-wrap justify-center gap-2">
+          <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors ${
                   activeCategory === category.id
-                    ? 'bg-sky-500 text-gray-900 shadow-lg shadow-sky-800/30'
-                    : 'bg-gray-50/60 border border-gray-700/50 text-gray-900 hover:text-gray-900 hover:border-gray-600'
+                    ? 'border-volt bg-volt text-volt-ink'
+                    : 'border-line-strong bg-transparent text-bone-muted hover:border-volt hover:text-volt'
                 }`}
               >
-                <span className="mr-1.5">{category.icon}</span>
                 {category.name}
               </button>
             ))}
@@ -280,34 +276,34 @@ export default function FAQPage() {
             filteredFAQs.map((faq, index) => (
               <div
                 key={index}
-                className={`bg-gray-50/60 border rounded-2xl overflow-hidden transition-all ${
-                  openIndex === index ? 'border-sky-500/40' : 'border-gray-700/50 hover:border-gray-600/50'
+                className={`border bg-night-800 transition-colors ${
+                  openIndex === index ? 'border-volt' : 'border-line hover:border-line-strong'
                 }`}
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left"
+                  className="flex w-full items-center justify-between px-6 py-4 text-left"
                 >
-                  <span className="text-gray-900 font-medium text-sm pr-4 leading-snug">{faq.question}</span>
+                  <span className="pr-4 text-sm font-semibold leading-snug text-bone">{faq.question}</span>
                   {openIndex === index ? (
-                    <FaChevronUp className="text-sky-400 flex-shrink-0 text-xs" />
+                    <FaChevronUp className="flex-shrink-0 text-xs text-volt" />
                   ) : (
-                    <FaChevronDown className="text-gray-900 flex-shrink-0 text-xs" />
+                    <FaChevronDown className="flex-shrink-0 text-xs text-bone-faint" />
                   )}
                 </button>
                 {openIndex === index && (
-                  <div className="px-6 pb-5 border-t border-gray-700/40">
-                    <p className="text-gray-900 leading-relaxed text-sm pt-4">{renderAnswerWithLinks(faq.answer)}</p>
+                  <div className="border-t border-line px-6 pb-5">
+                    <p className="pt-4 text-sm leading-relaxed text-bone-muted">{renderAnswerWithLinks(faq.answer)}</p>
                   </div>
                 )}
               </div>
             ))
           ) : (
-            <div className="text-center py-16">
-              <p className="text-gray-900">No questions matched your search.</p>
+            <div className="cell py-16 text-center">
+              <p className="text-bone-muted">No questions matched your search.</p>
               <button
                 onClick={() => { setSearchQuery(''); setActiveCategory('all'); }}
-                className="mt-3 text-sky-400 hover:text-sky-300 text-sm"
+                className="mt-3 font-mono text-[11px] uppercase tracking-[0.14em] text-volt hover:text-bone"
               >
                 Clear filters
               </button>
@@ -316,31 +312,32 @@ export default function FAQPage() {
         </div>
 
         {/* Still Have Questions CTA */}
-        <div className="mt-12 bg-gradient-to-br from-sky-800/30 to-gray-900/60 border border-sky-600/30 rounded-2xl p-8 text-center">
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Still have questions?</h2>
-          <p className="text-gray-900 text-sm mb-6">Our support team typically responds within 24 hours.</p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-500 text-gray-900 font-semibold py-3 px-6 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 text-sm">
-              <FaWhatsapp /> WhatsApp Us
+        <div className="mt-12 border border-volt/40 bg-volt/5 p-8 text-center">
+          <h2 className="h-display mb-2 text-xl">Still have questions?</h2>
+          <p className="mb-6 text-sm text-bone-muted">Our support team typically responds within 24 hours.</p>
+          <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="btn-volt">
+              <FaWhatsapp className="h-4 w-4" /> WhatsApp us
             </a>
-            <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-700 border border-gray-700 text-gray-900 font-semibold py-3 px-6 rounded-xl transition-colors text-sm">
-              <FaTelegramPlane /> Telegram Us
+            <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              <FaTelegramPlane className="h-4 w-4" /> Telegram us
             </a>
           </div>
         </div>
 
         {/* Policy Quick Links */}
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
           {[
             { href: '/privacy', label: 'Privacy Policy' },
             { href: '/terms', label: 'Terms & Conditions' },
             { href: '/shipping', label: 'Shipping Policy' },
             { href: '/refund', label: 'Return & Refund' },
           ].map((link) => (
-            <Link key={link.href} href={link.href}
-              className="bg-gray-50/60 border border-gray-700/50 hover:border-sky-500/40 rounded-xl p-3 text-center text-sm text-gray-900 hover:text-sky-400 transition-all">
+            <Link
+              key={link.href}
+              href={link.href}
+              className="cell cell-hover p-4 text-center font-mono text-[11px] uppercase tracking-[0.14em] text-bone-muted transition-colors hover:text-volt"
+            >
               {link.label}
             </Link>
           ))}

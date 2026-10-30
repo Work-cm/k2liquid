@@ -3,7 +3,6 @@ Allow: /
 Allow: /products
 Allow: /products/*
 Allow: /about
-Allow: /contact
 Allow: /faq
 Allow: /shipping
 Allow: /terms
@@ -22,4 +21,7 @@ Disallow: /auth/
 Disallow: /auth/*
 Disallow: /login
 
-Sitemap: https://k2paperliquid.com/sitemap.xml
+Disallow: /account
+Disallow: /account/*
+
+Sitemap: https://k2liquidstore.com/sitemap.xml

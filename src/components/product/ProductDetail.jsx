@@ -55,20 +55,20 @@ export default function ProductDetail({ product }) {
     : ['/images/Laboratory-Science.jpg'];
 
   return (
-    <div className="container mx-auto px-6 pt-28 pb-16">
+    <div className="wrap pb-16 pt-12 sm:pt-16">
       {/* Breadcrumb */}
-      <nav className="flex items-center gap-2 text-xs text-gray-400 mb-8" aria-label="Breadcrumb">
-        <Link href="/" className="hover:text-sky-500 transition-colors">Home</Link>
+      <nav className="mb-8 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint" aria-label="Breadcrumb">
+        <Link href="/" className="transition-colors hover:text-volt">Home</Link>
         <span>/</span>
-        <Link href="/products" className="hover:text-sky-500 transition-colors">Products</Link>
+        <Link href="/products" className="transition-colors hover:text-volt">Products</Link>
         <span>/</span>
-        <span className="text-gray-900 truncate max-w-[200px]">{product.name}</span>
+        <span className="max-w-[200px] truncate text-bone-muted">{product.name}</span>
       </nav>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
         {/* Image gallery */}
         <div>
-          <div className="relative aspect-square rounded-2xl overflow-hidden bg-gray-50 border border-gray-200">
+          <div className="cell relative aspect-square overflow-hidden bg-night-700">
             <Image
               src={images[activeImage]}
               alt={product.name}
@@ -79,20 +79,22 @@ export default function ProductDetail({ product }) {
               quality={90}
             />
             {!inStock && (
-              <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex items-center justify-center">
-                <span className="bg-gray-900 text-white text-sm font-bold px-5 py-2 rounded-full">Sold Out</span>
+              <div className="absolute inset-0 flex items-center justify-center bg-night-950/70 backdrop-blur-[2px]">
+                <span className="border border-signal bg-night-950 px-5 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-signal">
+                  Sold out
+                </span>
               </div>
             )}
           </div>
 
           {images.length > 1 && (
-            <div className="flex gap-3 mt-4">
+            <div className="mt-4 flex gap-3">
               {images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImage(i)}
-                  className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
-                    i === activeImage ? 'border-sky-500' : 'border-gray-200 hover:border-sky-300'
+                  className={`relative h-20 w-20 overflow-hidden border transition-colors ${
+                    i === activeImage ? 'border-volt' : 'border-line hover:border-line-strong'
                   }`}
                   aria-label={`View image ${i + 1}`}
                 >
@@ -105,44 +107,48 @@ export default function ProductDetail({ product }) {
 
         {/* Info */}
         <div className="flex flex-col">
-          <span className="text-sky-500 text-xs font-bold uppercase tracking-widest mb-2">
+          <span className="tag-plain mb-3 text-volt">
             {product.category}
           </span>
-          <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight mb-3">
+          <h1 className="h-display mb-4 text-3xl sm:text-4xl">
             {product.name}
           </h1>
 
           {/* Rating */}
-          <div className="flex items-center gap-2 mb-5">
+          <div className="mb-6 flex items-center gap-2">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
-                <FaStar key={i} className={`w-4 h-4 ${i < Math.round(product.rating) ? 'text-amber-400' : 'text-gray-200'}`} />
+                <FaStar key={i} className={`h-4 w-4 ${i < Math.round(product.rating) ? 'text-volt' : 'text-line-strong'}`} />
               ))}
             </div>
-            <span className="text-gray-400 text-sm">({product.numReviews} reviews)</span>
+            <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-bone-faint">
+              ({product.numReviews} reviews)
+            </span>
           </div>
 
           {/* Price */}
-          <div className="mb-6">
-            <span className="text-4xl font-black text-gray-900">&euro;{selectedVariant.price.toFixed(2)}</span>
+          <div className="mb-7 border-y border-line py-5">
+            <span className="font-display text-4xl font-extrabold text-bone">&euro;{selectedVariant.price.toFixed(2)}</span>
             {variants.length > 1 && (
-              <span className="text-gray-400 text-sm ml-2">for {variantLabel(product, selectedVariant)}</span>
+              <span className="ml-3 font-mono text-[11px] uppercase tracking-[0.14em] text-bone-faint">
+                / {variantLabel(product, selectedVariant)}
+              </span>
             )}
           </div>
 
           {/* Variant picker */}
           {variants.length > 1 && (
-            <div className="mb-6">
-              <p className="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3">Select Quantity</p>
+            <div className="mb-7">
+              <p className="field-label">Select format</p>
               <div className="flex flex-wrap gap-2">
                 {variants.map((v) => (
                   <button
                     key={v._id || v.quantity}
                     onClick={() => setSelectedVariant(v)}
-                    className={`px-4 py-2.5 rounded-xl text-sm font-bold border transition-all ${
+                    className={`border px-4 py-2.5 font-mono text-[12px] tracking-wide transition-colors ${
                       selectedVariant.quantity === v.quantity && selectedVariant.price === v.price
-                        ? 'bg-sky-500 text-white border-sky-500 shadow-md shadow-sky-500/20'
-                        : 'bg-white text-gray-900 border-gray-200 hover:border-sky-300'
+                        ? 'border-volt bg-volt text-volt-ink'
+                        : 'border-line-strong bg-transparent text-bone-muted hover:border-volt hover:text-volt'
                     }`}
                   >
                     {variantLabel(product, v)} &mdash; &euro;{v.price.toFixed(2)}
@@ -153,64 +159,66 @@ export default function ProductDetail({ product }) {
           )}
 
           {/* Quantity */}
-          <div className="mb-6">
-            <p className="text-xs font-bold text-gray-900 uppercase tracking-wide mb-3">Quantity</p>
+          <div className="mb-7">
+            <p className="field-label">Quantity</p>
             <div className="flex items-center gap-3">
-              <button
-                onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                className="w-10 h-10 rounded-xl border border-gray-200 text-gray-900 font-bold hover:border-sky-300 transition-colors"
-                aria-label="Decrease quantity"
-              >
-                &minus;
-              </button>
-              <span className="w-12 text-center font-black text-lg text-gray-900">{quantity}</span>
-              <button
-                onClick={() => setQuantity(quantity + 1)}
-                className="w-10 h-10 rounded-xl border border-gray-200 text-gray-900 font-bold hover:border-sky-300 transition-colors"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-              <span className={`text-sm font-bold ml-2 ${inStock ? 'text-green-600' : 'text-red-500'}`}>
+              <div className="flex items-center border border-line-strong">
+                <button
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  className="flex h-11 w-11 items-center justify-center font-bold text-bone transition-colors hover:bg-night-700 hover:text-volt"
+                  aria-label="Decrease quantity"
+                >
+                  &minus;
+                </button>
+                <span className="w-12 border-x border-line-strong text-center font-display text-lg font-bold text-bone">
+                  {quantity}
+                </span>
+                <button
+                  onClick={() => setQuantity(quantity + 1)}
+                  className="flex h-11 w-11 items-center justify-center font-bold text-bone transition-colors hover:bg-night-700 hover:text-volt"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+              <span className={`font-mono text-[11px] uppercase tracking-[0.14em] ${inStock ? 'text-volt' : 'text-signal'}`}>
                 {inStock ? `${product.countInStock} in stock` : 'Out of stock'}
               </span>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row gap-3 mb-8">
+          <div className="mb-8 flex flex-col gap-3 sm:flex-row">
             <motion.button
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleAddToCart}
               disabled={!inStock}
-              className={`flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm transition-all ${
-                added
-                  ? 'bg-green-500 text-white'
-                  : 'bg-white border-2 border-sky-500 text-sky-500 hover:bg-sky-50'
-              } disabled:opacity-50 disabled:cursor-not-allowed`}
+              className={`btn flex-1 ${
+                added ? 'border-volt bg-volt text-volt-ink' : 'btn-ghost'
+              } disabled:cursor-not-allowed disabled:opacity-40`}
             >
-              {added ? <><FaCheck /> Added to Cart</> : <><FaShoppingCart /> Add to Cart</>}
+              {added ? <><FaCheck className="h-4 w-4" /> Added to cart</> : <><FaShoppingCart className="h-4 w-4" /> Add to cart</>}
             </motion.button>
             <motion.button
-              whileTap={{ scale: 0.97 }}
+              whileTap={{ scale: 0.98 }}
               onClick={handleBuyNow}
               disabled={!inStock}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm bg-sky-500 hover:bg-sky-600 text-white shadow-lg shadow-sky-500/25 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-volt flex-1 disabled:cursor-not-allowed disabled:opacity-40"
             >
-              Buy Now
+              Buy now
             </motion.button>
           </div>
 
           {/* Trust badges */}
-          <div className="grid grid-cols-3 gap-3 pt-6 border-t border-gray-100">
+          <div className="grid grid-cols-3 gap-px border border-line bg-line">
             {[
               { icon: FaTruck, label: 'Discreet Shipping' },
               { icon: FaShieldAlt, label: 'Lab Tested' },
               { icon: FaBoxOpen, label: 'Secure Packaging' },
             ].map(({ icon: Icon, label }) => (
-              <div key={label} className="flex flex-col items-center gap-1.5 text-center">
-                <Icon className="w-5 h-5 text-sky-500" />
-                <span className="text-[11px] font-bold text-gray-900">{label}</span>
+              <div key={label} className="flex flex-col items-center gap-2 bg-night-900 py-5 text-center">
+                <Icon className="h-5 w-5 text-volt" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-bone-muted">{label}</span>
               </div>
             ))}
           </div>
@@ -218,9 +226,10 @@ export default function ProductDetail({ product }) {
       </div>
 
       {/* Description */}
-      <div className="mt-14 max-w-3xl">
-        <h2 className="text-xl font-black text-gray-900 tracking-tight mb-4">Description</h2>
-        <div className="text-gray-900 text-[15px] leading-relaxed whitespace-pre-line">
+      <div className="mt-14 max-w-3xl border-t border-line pt-10">
+        <p className="tag mb-4">description</p>
+        <h2 className="h-display mb-5 text-2xl">About this product</h2>
+        <div className="whitespace-pre-line text-[15px] leading-relaxed text-bone-muted">
           {product.description}
         </div>
       </div>

@@ -6,35 +6,36 @@ import { usePathname } from 'next/navigation';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useCart } from '@/components/cart/CartProvider';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaShoppingCart, FaUser, FaSearch, FaLeaf, FaFileAlt, FaSprayCan, FaTimes, FaChevronDown, FaSignOutAlt, FaUserShield, FaFlask, FaBitcoin, FaTruck, FaLock, FaTelegramPlane } from 'react-icons/fa';
-import { HiMenu } from 'react-icons/hi';
+import { HiOutlineShoppingBag, HiOutlineMagnifyingGlass, HiOutlineXMark, HiOutlineBars2, HiOutlineArrowUpRight, HiOutlineArrowRight } from 'react-icons/hi2';
+import { FaTelegramPlane, FaWhatsapp } from 'react-icons/fa';
 import Logo from '@/components/common/Logo';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/products', label: 'Shop' },
+  { href: '/', label: 'Index' },
+  { href: '/products', label: 'Catalog' },
   { href: '/about', label: 'About' },
+  { href: '/faq', label: 'FAQ' },
 ];
 
 const shopCategories = [
-  { href: '/products?category=k2-paper-sheets', label: 'K2 Paper Sheets', Icon: FaFileAlt, desc: 'Infused A4 & letter sheets' },
-  { href: '/products?category=k2-liquid-spray', label: 'K2 Liquid Spray', Icon: FaSprayCan, desc: 'High-strength liquid spray' },
-  { href: '/products?category=k2-powder', label: 'K2 Powder', Icon: FaLeaf, desc: 'Pure cannabinoid powder' },
-  { href: '/products?category=etomidate', label: 'Etomidate', Icon: FaFlask, desc: 'Etomidate powders & crystals' },
+  { href: '/products?category=k2-paper-sheets', label: 'K2 Paper Sheets', code: '01', desc: 'Infused A4 & letter sheets' },
+  { href: '/products?category=k2-liquid-spray', label: 'K2 Liquid Spray', code: '02', desc: 'High-strength sealed bottles' },
+  { href: '/products?category=k2-powder', label: 'K2 Powder', code: '03', desc: 'Pure cannabinoid powder' },
+  { href: '/products?category=etomidate', label: 'Etomidate', code: '04', desc: 'Research powders & crystals' },
+  { href: '/products?category=vapes-kpods', label: 'Vapes / K-Pods', code: '05', desc: 'Pre-filled pods & kits' },
 ];
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mobileShopOpen, setMobileShopOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [catOpen, setCatOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
+  const [query, setQuery] = useState('');
   const [mounted, setMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [shopOpen, setShopOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const searchRef = useRef(null);
-  const shopRef = useRef(null);
   const userRef = useRef(null);
+  const headerRef = useRef(null);
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const { cart } = useCart();
@@ -43,16 +44,12 @@ export default function Navbar() {
 
   useEffect(() => { setMounted(true); }, []);
   useEffect(() => {
-    setMenuOpen(false);
-    setSearchOpen(false);
-    setShopOpen(false);
-    setUserMenuOpen(false);
-    setMobileShopOpen(false);
+    setMenuOpen(false); setSearchOpen(false); setCatOpen(false); setUserOpen(false);
   }, [pathname]);
   useEffect(() => { if (searchOpen) searchRef.current?.focus(); }, [searchOpen]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
@@ -60,8 +57,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const onClick = (e) => {
-      if (shopRef.current && !shopRef.current.contains(e.target)) setShopOpen(false);
-      if (userRef.current && !userRef.current.contains(e.target)) setUserMenuOpen(false);
+      if (userRef.current && !userRef.current.contains(e.target)) setUserOpen(false);
+      if (headerRef.current && !headerRef.current.contains(e.target)) setCatOpen(false);
     };
     document.addEventListener('mousedown', onClick);
     return () => document.removeEventListener('mousedown', onClick);
@@ -69,364 +66,224 @@ export default function Navbar() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setSearchOpen(true);
-      }
-      if (e.key === 'Escape') {
-        setSearchOpen(false);
-        setShopOpen(false);
-        setUserMenuOpen(false);
-      }
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setSearchOpen(o => !o); }
+      if (e.key === 'Escape') { setSearchOpen(false); setCatOpen(false); setUserOpen(false); setMenuOpen(false); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = (menuOpen || searchOpen) ? 'hidden' : '';
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [menuOpen, searchOpen]);
+  }, [menuOpen]);
 
   const go = useCallback((q) => {
-    if (q.trim()) window.location.href = `/products?search=${encodeURIComponent(q.trim())}`;
+    window.location.href = q.trim() ? `/products?search=${encodeURIComponent(q.trim())}` : '/products';
   }, []);
+
+  const isActive = (href) => href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
     <>
-      {/* Gold announcement strip — scrolls away */}
-      <div className="bg-cyan-400">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-8 flex items-center justify-center gap-2">
-          <FaBitcoin className="text-ink" size={10} />
-          <p className="text-ink text-[10px] font-black uppercase tracking-[0.22em]">Bitcoin accepted &middot; Discreet shipping to 50+ countries</p>
-        </div>
-      </div>
+      <header
+        ref={headerRef}
+        className={`sticky top-0 z-40 border-b transition-colors duration-300 ${scrolled || catOpen || searchOpen ? 'bg-night-900/95 backdrop-blur-md border-line' : 'bg-night-900 border-line/60'}`}
+      >
+        <div className="wrap">
+          <div className="h-16 lg:h-[72px] flex items-stretch justify-between">
+            {/* Brand */}
+            <div className="flex items-center pr-6 lg:border-r border-line">
+              <Logo size={36} showDomain={false} />
+            </div>
 
-      {/* Floating pill bar */}
-      <header className={`fixed left-0 right-0 z-40 transition-all duration-300 ${scrolled ? 'top-3' : 'top-10'}`}>
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
-          <div className={`flex items-center justify-between gap-3 h-14 pl-3 pr-2 sm:pl-4 sm:pr-3 rounded-full bg-ink-deep/95 backdrop-blur-xl border border-white/10 transition-shadow duration-300 ${scrolled ? 'shadow-2xl shadow-ink-deep/40' : 'shadow-xl shadow-ink-deep/20'}`}>
-
-            {/* Logo */}
-            <Logo size={34} dark showDomain={false} className="shrink-0" />
-
-            {/* Center links — desktop */}
-            <nav className="hidden md:flex items-center gap-1">
-              {navLinks.map(({ href, label }) => {
-                const active = pathname === href || (href === '/products' && pathname.startsWith('/products'));
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    className={`relative px-4 py-2 rounded-full text-[13px] font-semibold transition-all ${active ? 'bg-white/10 text-cyan-300' : 'text-white/60 hover:text-white hover:bg-white/[0.07]'}`}
-                  >
-                    {label}
-                  </Link>
-                );
-              })}
-
-              {/* Categories */}
-              <div className="relative" ref={shopRef}>
-                <button
-                  onClick={() => setShopOpen(o => !o)}
-                  className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-[13px] font-semibold transition-all ${shopOpen ? 'bg-white/10 text-cyan-300' : 'text-white/60 hover:text-white hover:bg-white/[0.07]'}`}
-                  aria-expanded={shopOpen}
+            {/* Desktop nav */}
+            <nav className="hidden lg:flex items-stretch flex-1">
+              {navLinks.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`relative flex items-center px-6 font-mono text-[12px] uppercase tracking-[0.16em] border-r border-line transition-colors ${isActive(href) ? 'text-volt' : 'text-bone-muted hover:text-bone'}`}
                 >
-                  Categories <FaChevronDown size={7} className={`transition-transform duration-200 ${shopOpen ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {shopOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                      transition={{ duration: 0.15 }}
-                      className="absolute left-1/2 -translate-x-1/2 top-full pt-4 z-50 w-[440px]"
-                    >
-                      <div className="bg-ink border border-white/10 rounded-3xl shadow-2xl shadow-ink-deep/50 overflow-hidden">
-                        <div className="h-[3px] bg-gradient-to-r from-sky-700 via-sky-500 to-cyan-400" />
-                        <div className="p-3 grid grid-cols-2 gap-1.5">
-                          {shopCategories.map(({ href, label, Icon, desc }) => (
-                            <Link key={href} href={href} onClick={() => setShopOpen(false)} className="flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-white/[0.06] group/item transition-all">
-                              <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0 group-hover/item:bg-cyan-400 group-hover/item:border-cyan-400 transition-all">
-                                <Icon className="text-cyan-300 text-xs group-hover/item:text-ink transition-colors" />
-                              </div>
-                              <div className="min-w-0">
-                                <p className="text-white text-sm font-bold leading-none group-hover/item:text-cyan-300 transition-colors">{label}</p>
-                                <p className="text-white/35 text-[11px] mt-1 truncate">{desc}</p>
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-                        <Link href="/products" onClick={() => setShopOpen(false)} className="flex items-center justify-between px-6 py-3.5 bg-white/[0.04] border-t border-white/10 text-[11px] font-black uppercase tracking-[0.18em] text-cyan-300 hover:bg-cyan-400 hover:text-ink transition-all">
-                          Browse full catalog <FaChevronDown size={9} className="-rotate-90" />
-                        </Link>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                  {label}
+                  {isActive(href) && <span className="absolute left-0 right-0 bottom-0 h-[2px] bg-volt" />}
+                </Link>
+              ))}
+              <button
+                onClick={() => { setCatOpen(o => !o); setSearchOpen(false); }}
+                aria-expanded={catOpen}
+                className={`relative flex items-center gap-2 px-6 font-mono text-[12px] uppercase tracking-[0.16em] border-r border-line transition-colors ${catOpen ? 'text-volt bg-night-800' : 'text-bone-muted hover:text-bone'}`}
+              >
+                Categories
+                <span className={`inline-block transition-transform ${catOpen ? 'rotate-45' : ''}`}>+</span>
+              </button>
             </nav>
 
-            {/* Right actions */}
-            <div className="flex items-center gap-1.5 shrink-0">
+            {/* Actions */}
+            <div className="flex items-stretch">
               <button
-                onClick={() => setSearchOpen(true)}
-                className="hidden sm:flex items-center justify-center w-10 h-10 rounded-full text-white/60 hover:text-white hover:bg-white/10 transition-all"
+                onClick={() => { setSearchOpen(o => !o); setCatOpen(false); }}
                 aria-label="Search"
+                className={`flex items-center gap-3 px-4 lg:px-5 border-l border-line transition-colors ${searchOpen ? 'text-volt bg-night-800' : 'text-bone-muted hover:text-bone'}`}
               >
-                <FaSearch size={13} />
+                <HiOutlineMagnifyingGlass size={18} />
+                <kbd className="hidden xl:inline font-mono text-[10px] text-bone-faint border border-line px-1.5 py-0.5">CTRL K</kbd>
               </button>
 
-              <Link href="/cart" className="relative cart-icon w-10 h-10 flex items-center justify-center rounded-full bg-cyan-400 text-ink hover:bg-cyan-300 transition-all">
-                <FaShoppingCart size={13} />
-                {cartCount > 0 && (
-                  <motion.span key={cartCount} initial={{ scale: 0 }} animate={{ scale: 1 }} className="absolute -top-1 -right-1 bg-white text-ink text-[9px] font-black rounded-full w-[18px] h-[18px] flex items-center justify-center leading-none ring-2 ring-ink-deep">
-                    {cartCount}
-                  </motion.span>
-                )}
-              </Link>
-
-              {mounted && user ? (
-                <div className="relative hidden md:block" ref={userRef}>
+              {mounted && user && (
+                <div className="relative hidden md:flex" ref={userRef}>
                   <button
-                    onClick={() => setUserMenuOpen(o => !o)}
-                    className={`flex items-center gap-2 pl-1.5 pr-3 h-10 rounded-full border text-sm transition-all ${userMenuOpen ? 'border-cyan-400/50 text-cyan-300 bg-white/10' : 'border-white/15 bg-white/[0.06] hover:border-cyan-400/40 text-white/70 hover:text-white'}`}
+                    onClick={() => setUserOpen(o => !o)}
+                    className={`flex items-center gap-2 px-5 border-l border-line font-mono text-[12px] uppercase tracking-[0.12em] transition-colors ${userOpen ? 'text-volt bg-night-800' : 'text-bone-muted hover:text-bone'}`}
                   >
-                    <div className="w-7 h-7 rounded-full bg-sky-700 flex items-center justify-center text-white text-xs font-black">{user.name.charAt(0).toUpperCase()}</div>
-                    <span className="hidden lg:block font-semibold text-xs">{user.name.split(' ')[0]}</span>
-                    <FaChevronDown size={8} className={`transition-transform duration-200 ${userMenuOpen ? 'rotate-180' : ''}`} />
+                    <span className="w-6 h-6 bg-volt text-volt-ink flex items-center justify-center font-bold text-[11px]">{user.name.charAt(0).toUpperCase()}</span>
+                    <span className="hidden xl:inline">{user.name.split(' ')[0]}</span>
                   </button>
                   <AnimatePresence>
-                    {userMenuOpen && (
+                    {userOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute right-0 top-full mt-3 w-52 bg-ink border border-white/10 rounded-3xl shadow-2xl shadow-ink-deep/50 py-1.5 z-50"
+                        initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.15 }}
+                        className="absolute right-0 top-full w-60 bg-night-800 border border-line border-t-volt shadow-navy z-50"
                       >
-                        <div className="px-4 py-2.5 border-b border-white/10 mb-1">
-                          <p className="text-sm font-bold text-white truncate">{user.name}</p>
-                          <p className="text-xs text-white/40 truncate">{user.email}</p>
+                        <div className="px-4 py-3 border-b border-line">
+                          <p className="text-sm font-semibold text-bone truncate">{user.name}</p>
+                          <p className="font-mono text-[11px] text-bone-faint truncate">{user.email}</p>
                         </div>
-                        <Link href="/profile" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/[0.06] transition-colors">
-                          <FaUser size={11} className="text-cyan-300" /> Profile
-                        </Link>
-                        {user.isAdmin && (
-                          <Link href="/admin" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2.5 px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/[0.06] transition-colors">
-                            <FaUserShield size={11} className="text-cyan-300" /> Admin
-                          </Link>
-                        )}
-                        <div className="border-t border-white/10 my-1" />
-                        <button onClick={() => { setUserMenuOpen(false); logout(); }} className="flex items-center gap-2.5 w-full text-left px-4 py-2.5 text-sm text-white/70 hover:text-white hover:bg-white/[0.06] transition-colors">
-                          <FaSignOutAlt size={11} className="text-cyan-300" /> Sign out
-                        </button>
+                        <Link href="/profile" className="flex items-center justify-between px-4 py-3 text-sm text-bone-muted hover:text-volt hover:bg-night-700 transition-colors">Profile <HiOutlineArrowUpRight size={14} /></Link>
+                        {user.isAdmin && <Link href="/admin" className="flex items-center justify-between px-4 py-3 text-sm text-bone-muted hover:text-volt hover:bg-night-700 transition-colors">Admin <HiOutlineArrowUpRight size={14} /></Link>}
+                        <button onClick={() => { setUserOpen(false); logout(); }} className="w-full text-left px-4 py-3 text-sm text-bone-muted hover:text-signal hover:bg-night-700 border-t border-line transition-colors">Sign out</button>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
-              ) : mounted && (
-                <Link href="/login" className="hidden md:flex items-center gap-2 h-10 px-4 rounded-full border border-white/15 bg-white/[0.06] hover:border-cyan-400/40 text-white/70 hover:text-white text-xs font-bold transition-all">
-                  <FaUser size={11} /> Sign in
-                </Link>
               )}
 
-              {/* Hamburger — mobile */}
+              <Link href="/cart" className="cart-icon relative flex items-center gap-2 px-5 bg-volt text-volt-ink hover:bg-bone transition-colors font-mono text-[12px] uppercase tracking-[0.12em] font-semibold">
+                <HiOutlineShoppingBag size={18} />
+                <span className="hidden sm:inline">Cart</span>
+                <span className="min-w-[20px] h-5 px-1 bg-night-900 text-volt text-[11px] flex items-center justify-center font-bold">{mounted ? cartCount : 0}</span>
+              </Link>
+
               <button
                 onClick={() => setMenuOpen(true)}
-                className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/[0.07] border border-white/10 text-white hover:bg-white/10 transition-all"
                 aria-label="Open menu"
+                className="lg:hidden flex items-center px-4 border-l border-line text-bone hover:text-volt transition-colors"
               >
-                <HiMenu size={18} />
+                <HiOutlineBars2 size={22} />
               </button>
             </div>
           </div>
         </div>
+
+        {/* Category strip */}
+        <AnimatePresence>
+          {catOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="hidden lg:block overflow-hidden border-t border-line bg-night-900"
+            >
+              <div className="wrap">
+                <div className="grid grid-cols-5 divide-x divide-line border-x border-line">
+                  {shopCategories.map(({ href, label, code, desc }) => (
+                    <Link key={href} href={href} onClick={() => setCatOpen(false)} className="group p-6 hover:bg-night-800 transition-colors">
+                      <p className="font-mono text-[11px] text-volt mb-5">{code}</p>
+                      <p className="font-display font-bold text-bone text-lg leading-tight group-hover:text-volt transition-colors">{label}</p>
+                      <p className="text-bone-faint text-xs mt-1.5">{desc}</p>
+                      <HiOutlineArrowRight className="mt-6 text-bone-faint group-hover:text-volt group-hover:translate-x-1 transition-all" size={16} />
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Search strip */}
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}
+              className="overflow-hidden border-t border-line bg-night-900"
+            >
+              <form onSubmit={(e) => { e.preventDefault(); go(query); }} className="wrap">
+                <div className="flex items-center gap-4 h-20">
+                  <span className="font-mono text-volt text-sm">&gt;_</span>
+                  <input
+                    ref={searchRef}
+                    type="search"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search paper, spray, powder, etomidate..."
+                    className="flex-1 bg-transparent text-bone font-display text-xl lg:text-3xl font-bold outline-none placeholder:text-bone-faint placeholder:font-normal"
+                  />
+                  <button type="submit" className="btn-volt hidden sm:inline-flex">Search</button>
+                  <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search" className="text-bone-muted hover:text-signal"><HiOutlineXMark size={22} /></button>
+                </div>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      {/* Search overlay — dark card */}
-      <AnimatePresence>
-        {searchOpen && (
-          <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-[70] flex items-start justify-center px-4 pt-24 sm:pt-32 bg-ink-deep/70 backdrop-blur-sm"
-            onClick={() => setSearchOpen(false)}
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -16, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -16, scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 320, damping: 28 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-xl bg-ink rounded-3xl shadow-2xl overflow-hidden border border-white/10"
-            >
-              <div className="h-[3px] bg-gradient-to-r from-sky-700 via-sky-500 to-cyan-400" />
-              <form onSubmit={(e) => { e.preventDefault(); go(searchQuery); }} className="flex items-center gap-3 px-5 py-4 border-b border-white/10">
-                <FaSearch className="text-cyan-300 shrink-0" size={15} />
-                <input
-                  ref={searchRef}
-                  type="search"
-                  placeholder="Search K2 paper, spray, powder..."
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="flex-1 bg-transparent text-white text-base outline-none placeholder-white/35"
-                />
-                <button type="button" onClick={() => setSearchOpen(false)} className="text-white/40 hover:text-white shrink-0">
-                  <FaTimes size={14} />
-                </button>
-              </form>
-              <div className="p-3">
-                <p className="text-[10px] text-white/35 uppercase tracking-widest font-bold px-2 pb-2">Quick categories</p>
-                <div className="grid grid-cols-1 gap-1">
-                  {shopCategories.map(({ href, label, Icon, desc }) => (
-                    <Link key={href} href={href} onClick={() => setSearchOpen(false)} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/[0.06] transition-all group/item">
-                      <div className="w-8 h-8 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0 group-hover/item:bg-cyan-400 transition-colors">
-                        <Icon className="text-cyan-300 text-xs group-hover/item:text-ink transition-colors" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-white text-sm font-semibold leading-none">{label}</p>
-                        <p className="text-white/35 text-xs mt-0.5 truncate">{desc}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Mobile drawer — slides from right, dark */}
+      {/* Mobile full-screen menu */}
       <AnimatePresence>
         {menuOpen && (
-          <div className="fixed inset-0 z-[60] md:hidden">
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 bg-ink-deep/60 backdrop-blur-sm"
-              onClick={() => setMenuOpen(false)}
-            />
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[60] bg-night-950 flex flex-col lg:hidden"
+          >
+            <div className="flex items-center justify-between px-5 h-16 border-b border-line">
+              <Logo size={32} showDomain={false} />
+              <button onClick={() => setMenuOpen(false)} aria-label="Close menu" className="w-10 h-10 flex items-center justify-center border border-line text-bone hover:border-volt hover:text-volt"><HiOutlineXMark size={20} /></button>
+            </div>
 
-            <motion.div
-              initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-[320px] bg-ink flex flex-col overflow-hidden border-l border-white/10"
-            >
-              <div className="h-[3px] bg-gradient-to-r from-sky-700 via-sky-500 to-cyan-400 shrink-0" />
-
-              {/* Header */}
-              <div className="flex items-center justify-between px-5 py-4 border-b border-white/10 shrink-0">
-                <Logo size={32} dark showDomain={false} />
-                <button onClick={() => setMenuOpen(false)} className="w-9 h-9 flex items-center justify-center rounded-full bg-white/[0.06] hover:bg-white/10 text-white transition-all">
-                  <FaTimes size={13} />
-                </button>
-              </div>
-
-              {/* Search field */}
-              <form
-                onSubmit={(e) => { e.preventDefault(); setMenuOpen(false); go(searchQuery); }}
-                className="flex items-center gap-2 mx-4 my-4 bg-white/[0.05] border border-white/10 rounded-full px-4 py-2.5 shrink-0"
-              >
-                <FaSearch className="text-cyan-300 text-xs shrink-0" />
-                <input
-                  type="search"
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  placeholder="Search products..."
-                  className="flex-1 bg-transparent text-white text-sm outline-none placeholder-white/40"
-                />
+            <div className="flex-1 overflow-y-auto">
+              <form onSubmit={(e) => { e.preventDefault(); setMenuOpen(false); go(query); }} className="flex items-center gap-3 px-5 h-14 border-b border-line">
+                <span className="font-mono text-volt text-sm">&gt;_</span>
+                <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search products" className="flex-1 bg-transparent text-bone outline-none text-sm" />
               </form>
 
-              {/* Nav links */}
-              <nav className="flex-1 overflow-y-auto px-3 py-2">
-                <div className="space-y-1 mb-4">
-                  {navLinks.map(({ href, label }, i) => (
-                    <motion.div key={href} initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 * i, duration: 0.2 }}>
-                      <Link
-                        href={href}
-                        className={`flex items-center px-4 py-3 rounded-xl text-sm font-semibold transition-all ${pathname === href ? 'bg-cyan-400/15 text-cyan-300 border border-cyan-400/30' : 'text-white/70 hover:bg-white/[0.06] hover:text-white'}`}
-                      >
-                        {label}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </div>
-
-                {/* Categories accordion */}
-                <motion.div initial={{ opacity: 0, x: 16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 * navLinks.length, duration: 0.2 }}>
-                  <button
-                    onClick={() => setMobileShopOpen(o => !o)}
-                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-semibold transition-all ${pathname.startsWith('/products') ? 'bg-cyan-400/15 text-cyan-300 border border-cyan-400/30' : 'text-white/70 hover:bg-white/[0.06] hover:text-white'}`}
-                  >
-                    Shop by Category
-                    <FaChevronDown size={11} className={`transition-transform duration-200 ${mobileShopOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  <AnimatePresence>
-                    {mobileShopOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="space-y-1 pt-1 pb-1">
-                          {shopCategories.map(({ href, label, Icon, desc }) => (
-                            <Link
-                              key={href} href={href}
-                              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-white/70 hover:bg-white/[0.06] hover:text-white text-sm transition-all"
-                            >
-                              <div className="w-7 h-7 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center shrink-0">
-                                <Icon className="text-cyan-300 text-[10px]" />
-                              </div>
-                              <div className="min-w-0">
-                                <p className="font-medium leading-none">{label}</p>
-                                <p className="text-xs text-white/35 mt-0.5 truncate">{desc}</p>
-                              </div>
-                            </Link>
-                          ))}
-                          <Link href="/products" className="flex items-center justify-center py-2 text-xs text-cyan-300 hover:text-cyan-200 font-semibold transition-colors">View all &rarr;</Link>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
+              <nav className="border-b border-line">
+                {navLinks.map(({ href, label }, i) => (
+                  <motion.div key={href} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 * i }}>
+                    <Link href={href} className={`flex items-center justify-between px-5 py-5 border-b border-line last:border-b-0 font-display font-extrabold text-3xl uppercase tracking-tight ${isActive(href) ? 'text-volt' : 'text-bone'}`}>
+                      {label}
+                      <span className="font-mono text-xs text-bone-faint">0{i + 1}</span>
+                    </Link>
+                  </motion.div>
+                ))}
               </nav>
 
-              {/* Trust strip */}
-              <div className="px-5 py-3 border-t border-white/10 flex items-center gap-4 text-[10px] text-white/35 font-semibold uppercase tracking-wider shrink-0">
-                <span className="flex items-center gap-1.5"><FaTruck className="text-cyan-300" size={10} /> 48h</span>
-                <span className="flex items-center gap-1.5"><FaLock className="text-cyan-300" size={9} /> Discreet</span>
-                <span className="flex items-center gap-1.5"><FaBitcoin className="text-cyan-400" size={11} /> BTC</span>
-              </div>
-
-              {/* Bottom */}
-              <div className="px-3 pb-6 pt-3 border-t border-white/10 space-y-2 shrink-0">
-                <Link href="/cart" className="flex items-center justify-between w-full px-4 py-3 rounded-xl bg-cyan-400 text-ink hover:bg-cyan-300 text-sm font-black transition-all">
-                  <span className="flex items-center gap-2.5"><FaShoppingCart size={13} /> View cart</span>
-                  {cartCount > 0 && <span className="bg-ink text-cyan-300 text-xs font-black px-2 py-0.5 rounded-full">{cartCount}</span>}
-                </Link>
-
-                {mounted && user && (
-                  <>
-                    <Link href="/profile" className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] text-white/70 hover:text-white text-sm font-semibold transition-all">
-                      <FaUser size={12} /> Profile
+              <div className="px-5 py-5">
+                <p className="tag mb-4">Categories</p>
+                <div className="grid grid-cols-1 divide-y divide-line border border-line">
+                  {shopCategories.map(({ href, label, code }) => (
+                    <Link key={href} href={href} className="flex items-center gap-4 px-4 py-3.5 text-bone-muted hover:text-volt hover:bg-night-800 transition-colors">
+                      <span className="font-mono text-[11px] text-volt">{code}</span>
+                      <span className="text-sm font-medium">{label}</span>
+                      <HiOutlineArrowUpRight className="ml-auto" size={14} />
                     </Link>
-                    {user.isAdmin && (
-                      <Link href="/admin" className="flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.08] text-white/70 hover:text-white text-sm font-semibold transition-all">
-                        Admin Panel
-                      </Link>
-                    )}
-                    <button onClick={logout} className="w-full flex items-center gap-2.5 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/[0.05] text-sm font-semibold transition-all text-left">
-                      Sign out
-                    </button>
-                  </>
-                )}
+                  ))}
+                </div>
               </div>
-            </motion.div>
-          </div>
+
+              <div className="px-5 pb-6 grid grid-cols-2 gap-3">
+                <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaWhatsapp /> WhatsApp</a>
+                <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaTelegramPlane /> Telegram</a>
+              </div>
+            </div>
+
+            <div className="border-t border-line px-5 py-4 flex items-center justify-between gap-3">
+              {mounted && user ? (
+                <>
+                  <Link href="/profile" className="btn-ghost flex-1">Profile</Link>
+                  <button onClick={logout} className="btn-ghost flex-1 text-signal border-signal/40">Sign out</button>
+                </>
+              ) : (
+                <Link href="/auth/register" className="btn-volt flex-1">Register</Link>
+              )}
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

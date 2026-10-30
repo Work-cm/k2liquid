@@ -4,6 +4,7 @@ export const primaryKeywords = [
   'k2 liquid spray', 'k2 spray', 'k2 liquid', 'liquid k2 on paper', 'k2 spray for sale',
   'k2 powder', 'cannabinoids k2 powder', 'k2 cannabinoid powder', 'buy k2 powder',
   'etomidate', 'etomidate powder', 'etomidate crystal', 'buy etomidate', 'etomidate for sale',
+  'etomidate vape', 'k-pods', 'etomidate k-pods', 'vape pods', 'disposable vape',
 ];
 
 export const secondaryKeywords = [
@@ -20,26 +21,40 @@ export const allKeywords = [...primaryKeywords, ...secondaryKeywords];
 
 // Schema.org structured data for better SEO
 export const getProductSchema = (product) => {
-  const startingPrice = product.priceVariants?.[0]?.price ?? product.price;
   const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
+  const absoluteUrl = (path) => {
+    if (!path) return `${BASE_URL}/images/logo.png`;
+    return path.startsWith('http') ? path : `${BASE_URL}${path}`;
+  };
+  const availability = product.countInStock > 0
+    ? 'https://schema.org/InStock'
+    : 'https://schema.org/OutOfStock';
+  const variants = product.priceVariants?.length
+    ? product.priceVariants
+    : [{ label: undefined, price: product.price }];
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: product.name,
     description: product.description,
-    image: product.images?.[0] || `${BASE_URL}/images/logo.png`,
+    image: (product.images?.length ? product.images : ['/images/logo.png']).map(absoluteUrl),
+    sku: product.slug,
+    category: product.category,
     brand: { '@type': 'Brand', name: 'K2LiquidStore' },
-    offers: {
+    offers: variants.map((variant) => ({
       '@type': 'Offer',
-      price: startingPrice ?? 0,
+      name: variant.label,
+      price: variant.price ?? product.price ?? 0,
       priceCurrency: 'EUR',
-      availability: product.countInStock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      availability,
+      itemCondition: 'https://schema.org/NewCondition',
       url: `${BASE_URL}/products/${product.slug}`,
-    },
-    aggregateRating: product.rating ? {
+    })),
+    aggregateRating: product.rating && product.numReviews ? {
       '@type': 'AggregateRating',
       ratingValue: product.rating,
-      reviewCount: product.numReviews || 1,
+      reviewCount: product.numReviews,
     } : undefined,
   };
 };
@@ -54,7 +69,7 @@ export const getOrganizationSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'K2LiquidStore',
-  description: 'Premium K2 paper sheets, K2 liquid spray, cannabinoid K2 powder and research-grade etomidate with discreet worldwide shipping.',
+  description: 'Premium K2 paper sheets, K2 liquid spray, cannabinoid K2 powder, research-grade etomidate, vapes and K-Pods with discreet worldwide shipping.',
   url: getBaseUrl(),
   logo: {
     '@type': 'ImageObject',
@@ -74,7 +89,7 @@ export const getWebsiteSchema = () => ({
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'K2LiquidStore',
-  description: 'K2 paper sheets, K2 liquid spray, K2 powder and etomidate for sale online.',
+  description: 'K2 paper sheets, K2 liquid spray, K2 powder, etomidate, vapes and K-Pods for sale online.',
   url: getBaseUrl(),
   potentialAction: {
     '@type': 'SearchAction',

@@ -55,78 +55,79 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-20">
+    <div className="flex min-h-screen items-center justify-center bg-night-900 px-4 py-20">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-extrabold text-gray-900 mt-3">Create an account</h1>
-          <p className="text-gray-900 text-sm mt-1">Join K2LiquidStore for premium K2 paper, spray and powder</p>
+        <div className="mb-8 text-center">
+          <p className="tag mb-4">account.register</p>
+          <h1 className="h-display text-3xl">Create an account</h1>
+          <p className="mt-2 text-sm text-bone-muted">Join K2LiquidStore for premium K2 paper, spray and powder</p>
         </div>
 
-        <div className="bg-gray-50/70 border border-gray-700/50 rounded-2xl p-8 shadow-xl">
+        <div className="cell p-7 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
+              <label htmlFor="name" className="field-label">Full name</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaUser className="text-gray-900 text-xs" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <FaUser className="text-xs text-bone-faint" />
                 </div>
                 <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} required
-                  className="bg-gray-100/60 border border-gray-700 text-gray-900 rounded-xl py-3 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-600"
+                  className="field pl-10"
                   placeholder="John Doe" />
               </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+              <label htmlFor="email" className="field-label">Email address</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaEnvelope className="text-gray-900 text-xs" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <FaEnvelope className="text-xs text-bone-faint" />
                 </div>
                 <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required
-                  className="bg-gray-100/60 border border-gray-700 text-gray-900 rounded-xl py-3 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-600"
+                  className="field pl-10"
                   placeholder="your@email.com" />
               </div>
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-900 mb-2">Password</label>
+              <label htmlFor="password" className="field-label">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-900 text-xs" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <FaLock className="text-xs text-bone-faint" />
                 </div>
                 <input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required
-                  className="bg-gray-100/60 border border-gray-700 text-gray-900 rounded-xl py-3 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-600"
+                  className="field pl-10"
                   placeholder="Min. 6 characters" />
               </div>
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-900 mb-2">Confirm Password</label>
+              <label htmlFor="confirmPassword" className="field-label">Confirm password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaLock className="text-gray-900 text-xs" />
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                  <FaLock className="text-xs text-bone-faint" />
                 </div>
                 <input id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required
-                  className="bg-gray-100/60 border border-gray-700 text-gray-900 rounded-xl py-3 px-4 pl-10 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-600"
+                  className="field pl-10"
                   placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
               </div>
             </div>
 
-            <button type="submit" disabled={loading}
-              className="w-full bg-sky-500 hover:bg-sky-500 disabled:opacity-60 disabled:cursor-not-allowed text-gray-900 font-semibold py-3 px-4 rounded-xl flex items-center justify-center transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 mt-2">
-              {loading ? <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white" /> : 'Create Account'}
+            <button type="submit" disabled={loading} className="btn-volt w-full disabled:cursor-not-allowed disabled:opacity-60">
+              {loading ? <span className="loader h-4 w-4" /> : 'Create account'}
             </button>
           </form>
 
-          <p className="text-gray-900 text-sm text-center mt-6">
+          <p className="mt-6 text-center text-sm text-bone-muted">
             Already have an account?{' '}
-            <Link href="/auth/login" className="text-sky-400 hover:text-sky-300 font-medium">Sign in</Link>
+            <Link href="/auth/login" className="font-medium text-volt transition-colors hover:text-bone">Sign in</Link>
           </p>
         </div>
 
-        <p className="text-center text-xs text-gray-900 mt-6">
+        <p className="mt-6 text-center font-mono text-[10px] uppercase tracking-[0.14em] text-bone-faint">
           By registering you agree to our{' '}
-          <Link href="/terms" className="text-gray-900 hover:text-gray-900">Terms</Link> &amp; <Link href="/privacy" className="text-gray-900 hover:text-gray-900">Privacy Policy</Link>
+          <Link href="/terms" className="transition-colors hover:text-volt">Terms</Link> &amp;{' '}
+          <Link href="/privacy" className="transition-colors hover:text-volt">Privacy Policy</Link>
         </p>
       </div>
     </div>

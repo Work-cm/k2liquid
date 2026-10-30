@@ -5,39 +5,48 @@ import Product from '@/models/Product';
 
 export const dynamic = 'force-dynamic';
 
+const categoryKeywordMap = {
+  'k2-paper-sheets': 'k2 paper sheets, k2 infused paper, k2 spice paper, k2 paper for sale, buy k2 paper online',
+  'k2-liquid-spray': 'k2 liquid spray, k2 spray, liquid k2, k2 spray for sale, buy k2 spray online',
+  'k2-powder': 'k2 powder, cannabinoid k2 powder, synthetic cannabinoid powder, buy k2 powder',
+  'etomidate': 'etomidate, etomidate powder, etomidate crystal, etomidate for sale, buy etomidate',
+  'vapes-kpods': 'etomidate vape, k-pods, etomidate k-pods, vape pods, disposable vape',
+};
+
 // Dynamic Metadata for SEO - handles query parameters
 export async function generateMetadata({ searchParams }) {
   const params = await searchParams;
   const category = params?.category || '';
   
-  // Always use /products as canonical to avoid duplicate content from query params
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
-  const catLabel = categoryMeta[category.toLowerCase()]?.label || category;
-  
-  const categoryKeywords = catLabel
-    ? `${catLabel.toLowerCase()}, ${catLabel.toLowerCase()} for sale, buy ${catLabel.toLowerCase()}`
-    : 'k2 paper sheets, k2 liquid spray, k2 powder, etomidate, etomidate powder, buy etomidate, buy k2 online, k2 spice paper, k2 spray for sale';
+  const catKey = category.toLowerCase();
+  const catLabel = categoryMeta[catKey]?.label || category;
+  const canonicalPath = catKey
+    ? `/products?category=${encodeURIComponent(catKey)}`
+    : '/products';
+  const categoryKeywords = categoryKeywordMap[catKey]
+    || 'k2 paper sheets, k2 liquid spray, k2 powder, etomidate, etomidate powder, etomidate vape, k-pods, buy etomidate, buy k2 online, k2 spice paper, k2 spray for sale';
 
   return {
     metadataBase: new URL(baseUrl),
     title: catLabel
-      ? `Buy ${catLabel} Online | K2LiquidStore`
-      : 'K2 Paper Sheets, K2 Liquid Spray, K2 Powder & Etomidate for Sale | K2LiquidStore',
+      ? `Buy ${catLabel} Online`
+      : 'K2 Paper Sheets, K2 Liquid Spray, K2 Powder, Etomidate & K-Pods for Sale',
     description: catLabel
       ? `Buy premium ${catLabel.toLowerCase()} online at K2LiquidStore. Strong, consistent quality with discreet worldwide shipping.`
-      : 'Buy K2 paper sheets, K2 liquid spray, K2 powder and etomidate online. Premium quality, discreet packaging and fast worldwide delivery from K2LiquidStore.',
+      : 'Buy K2 paper sheets, K2 liquid spray, K2 powder, etomidate, vapes and K-Pods online. Premium quality, discreet packaging and fast worldwide delivery from K2LiquidStore.',
     keywords: `${categoryKeywords}, k2 paper, k2 spray, k2 liquid, k2 powder, k2 spice, cannabinoids k2, etomidate, etomidate powder, k2liquidstore`,
     alternates: {
-      canonical: '/products', // Always point to /products to avoid duplicate content from query params
+      canonical: canonicalPath,
     },
     openGraph: {
       title: catLabel
         ? `Buy ${catLabel} Online | K2LiquidStore`
-        : 'K2 Paper Sheets, K2 Liquid Spray, K2 Powder & Etomidate for Sale | K2LiquidStore',
+        : 'K2 Paper Sheets, K2 Liquid Spray, K2 Powder, Etomidate & K-Pods for Sale | K2LiquidStore',
       description: catLabel
         ? `Browse premium ${catLabel.toLowerCase()} at K2LiquidStore. Discreet worldwide shipping.`
-        : 'Browse K2 paper sheets, K2 liquid spray, K2 powder and etomidate. Premium quality with discreet worldwide shipping.',
-      url: '/products',
+        : 'Browse K2 paper sheets, K2 liquid spray, K2 powder, etomidate, vapes and K-Pods. Premium quality with discreet worldwide shipping.',
+      url: canonicalPath,
       type: 'website',
     },
   };
@@ -136,9 +145,9 @@ async function getProducts(searchParams) {
 // Loading component
 function ProductsLoading() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-14 w-14 border-t-2 border-b-2 border-sky-500" />
+    <div className="wrap py-16">
+      <div className="flex h-64 items-center justify-center">
+        <span className="loader h-10 w-10" />
       </div>
     </div>
   );
@@ -179,40 +188,44 @@ export default async function ProductsPage({ searchParams }) {
     'Browse our K2 paper sheets, K2 liquid spray, K2 powder and etomidate products — premium quality, discreet packaging and fast delivery.';
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-night-900">
 
       {/* Page hero */}
-      <div className="relative border-b border-gray-100 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-50/80 to-white pointer-events-none" />
-        <div className="container mx-auto px-6 relative z-10 pt-28 pb-10">
+      <div className="relative overflow-hidden border-b border-line">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-volt/60 to-transparent"
+        />
+        <div className="wrap relative z-10 pb-10 pt-16 sm:pt-20">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-2 text-xs text-gray-900 mb-6" aria-label="Breadcrumb">
-            <a href="/" className="hover:text-sky-500 transition-colors">Home</a>
-            <span className="text-gray-900">/</span>
-            <span className="text-gray-900">Products</span>
+          <nav className="mb-6 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint" aria-label="Breadcrumb">
+            <a href="/" className="transition-colors hover:text-volt">Home</a>
+            <span>/</span>
+            <span className="text-bone-muted">Products</span>
             {selectedCategory && (
               <>
-                <span className="text-gray-900">/</span>
-                <span className="text-sky-500 capitalize">{displayLabel}</span>
+                <span>/</span>
+                <span className="capitalize text-volt">{displayLabel}</span>
               </>
             )}
           </nav>
 
-          <h1 className="text-3xl md:text-4xl font-black text-gray-900 tracking-tight mb-2">
+          <p className="tag mb-4">catalog.index</p>
+          <h1 className="h-display mb-3 text-4xl sm:text-5xl">
             {displayLabel}
           </h1>
-          <p className="text-gray-900 max-w-2xl text-sm leading-relaxed">
+          <p className="max-w-2xl text-sm leading-relaxed text-bone-muted">
             {displayDesc}
           </p>
 
           {/* Category tabs */}
-          <div className="flex flex-wrap gap-2 mt-7">
+          <div className="mt-8 flex flex-wrap gap-2">
             {[
-              { href: '/products?category=etomidate', label: 'Etomidate', key: 'etomidate' },
               { href: '/products', label: 'All' },
               { href: '/products?category=k2-paper-sheets', label: 'K2 Paper Sheets', key: 'k2-paper-sheets' },
               { href: '/products?category=k2-liquid-spray', label: 'K2 Liquid Spray', key: 'k2-liquid-spray' },
               { href: '/products?category=k2-powder', label: 'K2 Powder', key: 'k2-powder' },
+              { href: '/products?category=etomidate', label: 'Etomidate', key: 'etomidate' },
               { href: '/products?category=vapes-kpods', label: 'Vapes / K-Pods', key: 'vapes-kpods' },
             ].map(({ href, label, key }) => {
               const active = label === 'All' ? !selectedCategory : catKey === key;
@@ -220,10 +233,10 @@ export default async function ProductsPage({ searchParams }) {
                 <a
                   key={label}
                   href={href}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.14em] transition-colors ${
                     active
-                      ? 'bg-sky-500 text-white shadow-md shadow-sky-500/20'
-                      : 'bg-white border border-gray-200 text-gray-900 hover:border-sky-300 hover:text-sky-600'
+                      ? 'border-volt bg-volt text-volt-ink'
+                      : 'border-line-strong bg-transparent text-bone-muted hover:border-volt hover:text-volt'
                   }`}
                 >
                   {label}
@@ -235,7 +248,7 @@ export default async function ProductsPage({ searchParams }) {
       </div>
 
       {/* Product grid */}
-      <div className="container mx-auto px-6 py-8">
+      <div className="wrap py-10">
         <Suspense fallback={<ProductsLoading />}>
           <ProductList initialProducts={products} selectedCategory={selectedCategory} />
         </Suspense>

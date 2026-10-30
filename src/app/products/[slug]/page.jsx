@@ -1,9 +1,11 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Script from 'next/script';
 import dbConnect from '@/lib/utils/db';
 import Product from '@/models/Product';
 import ProductDetail from '@/components/product/ProductDetail';
 import ProductCard from '@/components/product/ProductCard';
+import { getProductSchema } from '@/components/seo/SEOKeywords';
 
 export const dynamic = 'force-dynamic';
 
@@ -66,31 +68,33 @@ export async function generateMetadata({ params }) {
   const product = await getProduct(slug);
 
   if (!product) {
-    return { title: 'Product Not Found | K2LiquidStore' };
+    return { title: 'Product Not Found' };
   }
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
-  const minPrice =
-    product.price && product.price > 0
-      ? product.price
-      : product.priceVariants?.reduce(
-          (min, v) => (v.price < min ? v.price : min),
-          product.priceVariants[0]?.price ?? 0
-        ) ?? 0;
-
+  const absoluteImage = product.images?.[0]?.startsWith('http')
+    ? product.images[0]
+    : `${baseUrl}${product.images?.[0] || '/images/logo.png'}`;
   return {
     metadataBase: new URL(baseUrl),
-    title: `${product.name} | K2LiquidStore`,
+    title: product.name,
     description:
       product.description?.slice(0, 155) ||
       `Buy ${product.name} online at K2LiquidStore. Discreet worldwide shipping.`,
+    keywords: [
+      product.name,
+      `${product.name} for sale`,
+      `buy ${product.name} online`,
+      product.category,
+      'K2LiquidStore',
+    ],
     alternates: { canonical: `/products/${slug}` },
     openGraph: {
       title: `${product.name} | K2LiquidStore`,
       description: product.description?.slice(0, 155) || `Buy ${product.name} online.`,
       url: `/products/${slug}`,
       type: 'website',
-      images: product.images?.[0] ? [{ url: product.images[0] }] : [],
+      images: [{ url: absoluteImage }],
     },
   };
 }
@@ -104,24 +108,30 @@ export default async function ProductPage({ params }) {
   }
 
   const relatedProducts = await getRelatedProducts(product.category, product._id);
+  const productSchema = getProductSchema(product);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-night-900">
+      <Script
+        id={`schema-product-${product.slug}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
       <ProductDetail product={product} />
 
       {/* Related products */}
       {relatedProducts.length > 0 && (
-        <section className="container mx-auto px-6 pb-20">
-          <div className="flex items-center justify-between mb-8 pt-10 border-t border-gray-100">
-            <h2 className="text-2xl font-black text-gray-900 tracking-tight">Related Products</h2>
+        <section className="wrap pb-20">
+          <div className="mb-8 flex items-center justify-between border-t border-line pt-10">
+            <h2 className="h-display text-2xl sm:text-3xl">Related products</h2>
             <Link
               href={`/products?category=${encodeURIComponent(product.category)}`}
-              className="text-sky-500 text-sm font-bold hover:underline"
+              className="font-mono text-[11px] uppercase tracking-[0.16em] text-volt transition-colors hover:text-bone"
             >
               View all &rarr;
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {relatedProducts.map((p) => (
               <ProductCard key={p._id} product={p} />
             ))}

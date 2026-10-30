@@ -4,33 +4,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaStar, FaShoppingCart, FaEye } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
 
 export default function ProductCard({ product }) {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   if (!product) {
     console.error('ProductCard received undefined product');
     return null;
   }
-  
+
   const displayPrice = product.price && product.price > 0
     ? product.price
     : product.priceVariants && product.priceVariants.length > 0
       ? product.priceVariants.reduce((min, v) => v.price < min ? v.price : min, product.priceVariants[0]?.price || 0)
       : 0;
 
+  const href = `/products/${product.slug || product._id}`;
+  const inStock = product.countInStock > 0;
+
   return (
     <motion.div
-      whileHover={{ y: -4 }}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
-      className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-sky-300 hover:shadow-lg hover:shadow-sky-50 transition-all duration-300 flex flex-col h-full"
+      className="group relative flex h-full flex-col border border-line bg-night-800 transition-colors duration-200 hover:border-volt"
     >
       {/* Image */}
       <Link
-        href={`/products/${product.slug || product._id}`}
-        className="relative h-52 w-full overflow-hidden block bg-gray-50"
+        href={href}
+        className="relative block h-52 w-full overflow-hidden border-b border-line bg-night-700"
         aria-label={`View ${product.name}`}
       >
         {product.images && product.images.length > 0 ? (
@@ -51,58 +54,62 @@ export default function ProductCard({ product }) {
             />
           </motion.div>
         ) : (
-          <div className="absolute inset-0 bg-gray-100 flex items-center justify-center">
-            <span className="text-gray-900 text-sm">No image</span>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-bone-faint">No image</span>
           </div>
         )}
 
         {/* Category badge */}
-        <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-sky-600 text-[10px] font-bold uppercase tracking-wide px-2.5 py-1 rounded-lg border border-sky-100 shadow-sm">
-          {product.category}
-        </span>
+        {product.category && (
+          <span className="absolute left-3 top-3 border border-line bg-night-950/90 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-volt backdrop-blur-sm">
+            {product.category}
+          </span>
+        )}
 
         {/* Out of stock */}
-        {product.countInStock <= 0 && (
-          <div className="absolute inset-0 bg-white/70 backdrop-blur-[2px] flex items-center justify-center">
-            <span className="bg-gray-900 text-white text-xs font-bold px-4 py-1.5 rounded-full">Sold Out</span>
+        {!inStock && (
+          <div className="absolute inset-0 flex items-center justify-center bg-night-950/70 backdrop-blur-[2px]">
+            <span className="border border-signal bg-night-950 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.16em] text-signal">
+              Sold out
+            </span>
           </div>
         )}
       </Link>
 
       {/* Content */}
-      <div className="p-4 flex flex-col flex-1">
-        <Link href={`/products/${product.slug || product._id}`}>
-          <h3 className="text-gray-900 font-bold text-sm leading-snug hover:text-sky-500 transition-colors line-clamp-1 mb-1">
+      <div className="flex flex-1 flex-col p-4">
+        <Link href={href}>
+          <h3 className="mb-1 line-clamp-1 font-display text-sm font-bold leading-snug text-bone transition-colors group-hover:text-volt">
             {product.name || 'Unnamed Product'}
           </h3>
         </Link>
 
         {/* Rating */}
-        <div className="flex items-center gap-1.5 mb-3">
+        <div className="mb-3 flex items-center gap-1.5">
           <div className="flex">
             {[...Array(5)].map((_, i) => (
               <FaStar
                 key={i}
-                className={`w-3 h-3 ${i < Math.round(product.rating) ? 'text-amber-400' : 'text-gray-200'}`}
+                className={`h-3 w-3 ${i < Math.round(product.rating) ? 'text-volt' : 'text-line-strong'}`}
               />
             ))}
           </div>
-          <span className="text-gray-900 text-xs">({product.numReviews})</span>
+          <span className="font-mono text-[10px] text-bone-faint">({product.numReviews ?? 0})</span>
         </div>
 
         {/* Price + button */}
-        <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
+        <div className="mt-auto flex items-center justify-between border-t border-line pt-3">
           <div>
-            <span className="text-gray-900 font-black text-lg">&euro;{displayPrice.toFixed(2)}</span>
+            <span className="font-display text-lg font-extrabold text-bone">&euro;{displayPrice.toFixed(2)}</span>
             {product.priceVariants && product.priceVariants.length > 1 && (
-              <span className="text-gray-900 text-xs ml-1">+</span>
+              <span className="ml-1 font-mono text-[10px] text-bone-faint">from</span>
             )}
           </div>
           <Link
-            href={`/products/${product.slug || product._id}`}
-            className="bg-sky-500 hover:bg-sky-600 text-white text-xs font-bold px-4 py-2 rounded-xl transition-colors flex items-center gap-1.5"
+            href={href}
+            className="inline-flex items-center gap-1.5 border border-line-strong px-3.5 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-bone transition-colors hover:border-volt hover:text-volt"
           >
-            View <span className="text-[10px]">&rarr;</span>
+            View <FiArrowUpRight className="h-3.5 w-3.5" />
           </Link>
         </div>
       </div>

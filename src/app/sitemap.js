@@ -25,12 +25,6 @@ export default async function sitemap() {
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
       url: `${baseUrl}/faq`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
@@ -62,6 +56,19 @@ export default async function sitemap() {
     },
   ];
 
+  const categoryPages = [
+    'k2-paper-sheets',
+    'k2-liquid-spray',
+    'k2-powder',
+    'etomidate',
+    'vapes-kpods',
+  ].map((category) => ({
+    url: `${baseUrl}/products?category=${category}`,
+    lastModified: new Date(),
+    changeFrequency: 'daily',
+    priority: 0.85,
+  }));
+
   // Fetch all products from database
   let productPages = [];
   try {
@@ -80,5 +87,5 @@ export default async function sitemap() {
   }
 
   // Always return at least static pages
-  return [...staticPages, ...productPages];
+  return [...staticPages, ...categoryPages, ...productPages];
 }

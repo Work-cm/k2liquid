@@ -62,71 +62,68 @@ export default function CheckoutForm({ orderDetails }) {
     }
   };
 
-  const inputClass = 'bg-gray-100/60 border border-gray-700 text-white rounded-xl py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-600 text-sm';
-  const labelClass = 'block text-xs font-medium text-gray-900 mb-1.5';
-
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
       {errorMessage && (
-        <div className="bg-sky-500/20 border border-sky-500/40 text-sky-400 px-4 py-3 rounded-xl text-sm">
-          {errorMessage}
-        </div>
+        <div className="note-signal">{errorMessage}</div>
       )}
 
-      <h3 className="text-white font-semibold text-sm">Billing Information</h3>
+      <h3 className="font-display text-sm font-bold uppercase tracking-wide text-bone">
+        Billing information
+      </h3>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label className={labelClass}>Full Name</label>
+          <label className="field-label">Full name</label>
           <input name="name" type="text" required value={billingDetails.name} onChange={handleChange}
-            placeholder="John Doe" className={inputClass} />
+            placeholder="John Doe" className="field" />
         </div>
         <div className="sm:col-span-2">
-          <label className={labelClass}>WhatsApp Number</label>
+          <label className="field-label">WhatsApp number</label>
           <input name="whatsapp" type="tel" required value={billingDetails.whatsapp} onChange={handleChange}
-            placeholder="+1 234 567 8900" className={inputClass} />
+            placeholder="+1 234 567 8900" className="field" />
         </div>
         <div>
-          <label className={labelClass}>Country</label>
+          <label className="field-label">Country</label>
           <input name="country" type="text" required value={billingDetails.country} onChange={handleChange}
-            placeholder="United States" className={inputClass} />
+            placeholder="United States" className="field" />
         </div>
         <div className="sm:col-span-2">
-          <label className={labelClass}>Street Address</label>
+          <label className="field-label">Street address</label>
           <input name="address" type="text" required value={billingDetails.address} onChange={handleChange}
-            placeholder="123 Main Street" className={inputClass} />
+            placeholder="123 Main Street" className="field" />
         </div>
         <div>
-          <label className={labelClass}>City</label>
+          <label className="field-label">City</label>
           <input name="city" type="text" required value={billingDetails.city} onChange={handleChange}
-            placeholder="New York" className={inputClass} />
+            placeholder="New York" className="field" />
         </div>
         <div>
-          <label className={labelClass}>Postal Code</label>
+          <label className="field-label">Postal code</label>
           <input name="postalCode" type="text" required value={billingDetails.postalCode} onChange={handleChange}
-            placeholder="10001" className={inputClass} />
+            placeholder="10001" className="field" />
         </div>
       </div>
 
       <button
         type="submit"
         disabled={processing}
-        className="w-full bg-sky-500 hover:bg-sky-500 text-white font-semibold py-3 px-6 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed disabled:translate-y-0 mt-2"
+        className="btn-volt mt-2 w-full disabled:cursor-not-allowed disabled:opacity-60"
       >
         {processing ? (
           <>
-            <FaSpinner className="animate-spin mr-2" />
-            Placing Order...
+            <FaSpinner className="h-3.5 w-3.5 animate-spin" />
+            Placing order...
           </>
         ) : (
           <>
-            <FaLock className="mr-2 text-xs" />
-            Place Order &mdash; &euro;{orderDetails.total.toFixed(2)}
+            <FaLock className="h-3.5 w-3.5" />
+            Place order &mdash; &euro;{orderDetails.total.toFixed(2)}
           </>
         )}
       </button>
 
-      <p className="text-gray-900 text-xs text-center">
+      <p className="text-center font-mono text-[10px] uppercase tracking-[0.14em] text-bone-faint">
         By placing your order you agree to be contacted with payment instructions via WhatsApp.
       </p>
     </form>

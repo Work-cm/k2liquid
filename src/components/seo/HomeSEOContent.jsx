@@ -1,43 +1,74 @@
+import Link from 'next/link';
+import { FiArrowRight } from 'react-icons/fi';
+
+const COLUMNS = [
+  {
+    title: 'K2 Paper Sheets & Liquid Spray',
+    body: [
+      'K2 paper sheets are our most ordered format — A4 sheets evenly infused with synthetic cannabinoid, undetectable in transit and consistent sheet to sheet. Every batch is coated under controlled conditions so strength never varies.',
+      'Prefer to apply it yourself? Our K2 liquid spray ships in sealed, leak-proof bottles. A single bottle treats multiple sheets, and the formula is tuned for fast, even absorption into standard paper stock.',
+    ],
+    links: [
+      { href: '/products?category=k2-paper-sheets', label: 'Shop K2 paper sheets' },
+      { href: '/products?category=k2-liquid-spray', label: 'Shop K2 liquid spray' },
+    ],
+  },
+  {
+    title: 'K2 Powder, Etomidate & Vapes',
+    body: [
+      'K2 powder gives you full control — make your own infused paper, spray or custom blends at whatever strength you need. Every lot is lab-tested and shipped with a batch code you can verify against its certificate of analysis.',
+      'We also stock research-grade etomidate in powder and crystal form, plus pre-filled vapes and K-pods. Same standard: verified purity, discreet packaging, tracked worldwide delivery.',
+    ],
+    links: [
+      { href: '/products?category=k2-powder', label: 'Shop K2 powder' },
+      { href: '/products?category=etomidate', label: 'Shop etomidate' },
+      { href: '/products?category=vapes-kpods', label: 'Shop vapes and K-Pods' },
+    ],
+  },
+];
+
 export default function HomeSEOContent() {
   return (
-    <section className="bg-white border-y border-sky-100 py-20">
-      <div className="container mx-auto px-6 max-w-4xl">
-        <h2 className="text-2xl md:text-3xl font-black text-ink tracking-tight mb-6 text-center">
-          Buy K2 Paper Sheets, K2 Liquid Spray & K2 Powder Online
+    <section className="border-b border-line bg-night-950">
+      <div className="wrap py-16 sm:py-24">
+        <p className="tag mb-3">05 — product.notes</p>
+        <h2 className="h-display mb-12 max-w-3xl text-3xl sm:text-4xl">
+          EVERY FORMAT, <span className="text-volt">ONE STANDARD</span>
         </h2>
-        <p className="text-gray-900 text-sm leading-relaxed mb-6 text-center max-w-2xl mx-auto">
-          K2LiquidStore.com supplies premium K2 paper sheets, K2 liquid spray and cannabinoid K2 powder with discreet packaging and fast worldwide delivery.
-        </p>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-10">
-          <article className="bg-sky-50/60 border border-sky-100 rounded-2xl p-6 hover:border-sky-300 transition-colors">
-            <h3 className="text-lg font-bold text-ink mb-3">K2 Paper Sheets</h3>
-            <p className="text-gray-900 text-sm leading-relaxed">
-              Our K2 infused paper sheets come in A4 and letter sizes, evenly coated for consistent strength on every sheet. Odourless, colourless and shipped flat in plain envelopes.
-            </p>
-          </article>
-
-          <article className="bg-sky-50/60 border border-sky-100 rounded-2xl p-6 hover:border-sky-300 transition-colors">
-            <h3 className="text-lg font-bold text-ink mb-3">K2 Liquid Spray</h3>
-            <p className="text-gray-900 text-sm leading-relaxed">
-              High-strength K2 liquid spray in sealed bottles. Easy to apply to paper or herbs, long-lasting and consistent batch to batch. Available in multiple bottle sizes.
-            </p>
-          </article>
-
-          <article className="bg-sky-50/60 border border-sky-100 rounded-2xl p-6 hover:border-sky-300 transition-colors">
-            <h3 className="text-lg font-bold text-ink mb-3">Cannabinoid K2 Powder</h3>
-            <p className="text-gray-900 text-sm leading-relaxed">
-              Pure cannabinoid K2 powder for making your own paper sheets, sprays or blends. Sold by the gram, lab-tested for purity and sealed for freshness.
-            </p>
-          </article>
-
-          <article className="bg-sky-50/60 border border-sky-100 rounded-2xl p-6 hover:border-sky-300 transition-colors">
-            <h3 className="text-lg font-bold text-ink mb-3">Why Customers Trust Us</h3>
-            <p className="text-gray-900 text-sm leading-relaxed">
-              Quality-checked batches, plain packaging and 48-hour dispatch with full tracking. Buy K2 online with confidence from a supplier focused on quality, discretion and support.
-            </p>
-          </article>
+        <div className="grid grid-cols-1 gap-px border border-line bg-line lg:grid-cols-2">
+          {COLUMNS.map((col) => (
+            <article key={col.title} className="bg-night-900 p-7 sm:p-10">
+              <h3 className="font-display text-lg font-bold uppercase tracking-wide text-bone">
+                {col.title}
+              </h3>
+              {col.body.map((p, i) => (
+                <p key={i} className="mt-4 text-[15px] leading-relaxed text-bone-muted">
+                  {p}
+                </p>
+              ))}
+              <ul className="mt-6 space-y-2.5">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="group inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.14em] text-volt hover:text-bone"
+                    >
+                      {link.label}
+                      <FiArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
         </div>
+
+        <p className="mt-8 max-w-3xl text-sm leading-relaxed text-bone-faint">
+          Trusted by repeat buyers across the US, EU and beyond — discreet packaging,
+          Bitcoin-only checkout, and support on WhatsApp and Telegram seven days a week.
+          Browse the <Link href="/products" className="text-volt underline underline-offset-4 decoration-volt/40 hover:decoration-volt">full catalog</Link> or read our <Link href="/faq" className="text-volt underline underline-offset-4 decoration-volt/40 hover:decoration-volt">FAQ</Link> for shipping and payment details.
+        </p>
       </div>
     </section>
   );

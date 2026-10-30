@@ -1,32 +1,46 @@
 'use client';
 
 import Link from 'next/link';
-import { FaTelegramPlane, FaWhatsapp, FaBitcoin, FaCheckCircle } from 'react-icons/fa';
-import { HiOutlineArrowRight as HiArrowRight } from 'react-icons/hi2';
 import { useState } from 'react';
-import Logo, { LogoMark } from '@/components/common/Logo';
+import { FaTelegramPlane, FaWhatsapp, FaBitcoin } from 'react-icons/fa';
+import { HiOutlineArrowRight, HiOutlineArrowUpRight } from 'react-icons/hi2';
+import { LogoMark } from '@/components/common/Logo';
 
-const footerLinks = {
-  Shop: [
-    { href: '/products', label: 'All Products' },
-    { href: '/products?category=k2-paper-sheets', label: 'K2 Paper Sheets' },
-    { href: '/products?category=k2-liquid-spray', label: 'K2 Liquid Spray' },
-    { href: '/products?category=k2-powder', label: 'K2 Powder' },
-    { href: '/products?category=etomidate', label: 'Etomidate' },
-  ],
-  Company: [
-    { href: '/about', label: 'About Us' },
-    { href: '/faq', label: 'FAQ' },
-    { href: '/shipping', label: 'Shipping Info' },
-    { href: '/contact', label: 'Contact' },
-  ],
-};
+const columns = [
+  {
+    title: 'Catalog',
+    links: [
+      { href: '/products', label: 'All products' },
+      { href: '/products?category=k2-paper-sheets', label: 'K2 Paper Sheets' },
+      { href: '/products?category=k2-liquid-spray', label: 'K2 Liquid Spray' },
+      { href: '/products?category=k2-powder', label: 'K2 Powder' },
+      { href: '/products?category=etomidate', label: 'Etomidate' },
+      { href: '/products?category=vapes-kpods', label: 'Vapes / K-Pods' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { href: '/about', label: 'About' },
+      { href: '/faq', label: 'FAQ' },
+      { href: '/shipping', label: 'Shipping' },
+      { href: '/refund', label: 'Refunds' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      { href: '/terms', label: 'Terms' },
+      { href: '/privacy', label: 'Privacy' },
+    ],
+  },
+];
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState('idle');
 
-  const handleSubscribe = (e) => {
+  const subscribe = (e) => {
     e.preventDefault();
     if (!email) return;
     setStatus('loading');
@@ -34,101 +48,101 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-ink text-white overflow-hidden">
-      {/* Giant serif wordmark band */}
-      <div className="border-b border-white/10">
-        <div className="container mx-auto px-6 pt-14 pb-8 flex flex-col items-center text-center">
-          <LogoMark size={56} />
-          <p className="font-display font-black tracking-tight mt-5 leading-none" style={{ fontSize: 'clamp(2.2rem,6vw,4.2rem)' }}>
-            K2 <span className="text-sky-400">Liquid</span><span className="text-cyan-400">Store</span>
-          </p>
-          <p className="text-white/35 text-xs tracking-[0.3em] uppercase font-semibold mt-3">Lab standard &middot; Discreet &middot; Worldwide</p>
-        </div>
-      </div>
-
-      {/* Main grid */}
-      <div className="container mx-auto px-6 py-14">
-        <div className="grid grid-cols-2 md:grid-cols-12 gap-10 lg:gap-12">
-
-          {/* Newsletter + brand blurb */}
-          <div className="col-span-2 md:col-span-5 space-y-6">
-            <div>
-              <h4 className="font-display font-black text-2xl tracking-tight mb-2">Restocks &amp; new drops.</h4>
-              <p className="text-white/45 text-sm leading-relaxed max-w-xs">One short email when new batches land. No spam.</p>
-            </div>
-            <form onSubmit={handleSubscribe} className="flex w-full max-w-sm gap-2">
+    <footer className="border-t border-line bg-night-950 mt-24">
+      {/* Top: newsletter + contact */}
+      <div className="wrap">
+        <div className="grid lg:grid-cols-2 border-x border-line divide-y lg:divide-y-0 lg:divide-x divide-line">
+          <div className="p-8 lg:p-12">
+            <p className="tag mb-5">Restock alerts</p>
+            <h3 className="h-display text-3xl lg:text-4xl mb-4">New batches,<br />one email.</h3>
+            <p className="text-bone-muted text-sm max-w-sm mb-8">No marketing noise. One short message when fresh stock lands.</p>
+            <form onSubmit={subscribe} className="flex max-w-md border border-line focus-within:border-volt transition-colors">
               <input
                 type="email"
                 required
                 value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="you@email.com"
-                className="flex-1 bg-white/[0.06] border border-white/15 rounded-full px-5 py-3 text-sm text-white placeholder-white/35 outline-none focus:border-cyan-400 transition-colors"
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@domain.com"
+                className="flex-1 min-w-0 bg-transparent px-4 py-3.5 text-sm text-bone outline-none"
               />
-              <button
-                type="submit"
-                disabled={status !== 'idle'}
-                className="inline-flex items-center gap-2 bg-cyan-400 hover:bg-cyan-300 disabled:opacity-70 text-ink font-black text-sm px-5 py-3 rounded-full transition-all whitespace-nowrap"
-              >
-                {status === 'done' ? <><FaCheckCircle /> In</> : status === 'loading' ? '...' : <>Join <HiArrowRight size={13} /></>}
+              <button type="submit" disabled={status !== 'idle'} className="px-5 bg-volt text-volt-ink font-mono text-[12px] uppercase tracking-[0.14em] font-semibold hover:bg-bone transition-colors disabled:opacity-70">
+                {status === 'done' ? 'Added' : status === 'loading' ? '...' : 'Join'}
               </button>
             </form>
-
-            <div className="space-y-2.5 pt-2">
-              <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-sm text-white/55 hover:text-white transition-colors">
-                <span className="w-8 h-8 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center shrink-0"><FaTelegramPlane className="text-cyan-300 text-xs" /></span> Telegram &mdash; @cannachem
-              </a>
-              <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-sm text-white/55 hover:text-white transition-colors">
-                <span className="w-8 h-8 rounded-full bg-white/[0.07] border border-white/10 flex items-center justify-center shrink-0"><FaWhatsapp className="text-cyan-300 text-xs" /></span> WhatsApp Support
-              </a>
-            </div>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([section, links]) => (
-            <div key={section} className="md:col-span-2">
-              <h4 className="text-[11px] font-black uppercase tracking-[0.22em] text-cyan-400 mb-5">{section}</h4>
-              <ul className="space-y-3">
-                {links.map(({ href, label }) => (
-                  <li key={href}>
-                    <Link href={href} className="group text-sm text-white/50 hover:text-white transition-colors flex items-center gap-1.5">
-                      <span className="w-0 group-hover:w-2 h-[2px] bg-cyan-400 rounded-full transition-all duration-200 shrink-0" />
-                      {label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-
-          {/* Assurance column */}
-          <div className="col-span-2 md:col-span-3">
-            <h4 className="text-[11px] font-black uppercase tracking-[0.22em] text-cyan-400 mb-5">Guaranteed</h4>
-            <ul className="space-y-3">
-              {['Dispatched within 48 hours', 'Plain, discreet packaging', 'Batch-tested consistency', 'Secure BTC checkout'].map((text) => (
-                <li key={text} className="flex items-center gap-2.5 text-sm text-white/50">
-                  <FaCheckCircle className="text-sky-400 text-[11px] shrink-0" />
-                  {text}
-                </li>
-              ))}
-            </ul>
-            <div className="inline-flex items-center gap-2.5 text-sm bg-white/[0.06] border border-white/10 rounded-2xl px-4 py-3 mt-6">
-              <FaBitcoin className="text-cyan-400 text-xl shrink-0" />
-              <span className="text-white/60">Payment: <span className="text-cyan-300 font-bold">Bitcoin (BTC) only</span></span>
+          <div className="p-8 lg:p-12 grid sm:grid-cols-2 gap-6">
+            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="group cell cell-hover p-5 flex flex-col justify-between min-h-[140px]">
+              <FaWhatsapp className="text-volt text-xl" />
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint">WhatsApp</p>
+                <p className="text-bone font-semibold mt-1 flex items-center gap-2">+1 512-592-2145 <HiOutlineArrowUpRight className="text-bone-faint group-hover:text-volt" size={14} /></p>
+              </div>
+            </a>
+            <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="group cell cell-hover p-5 flex flex-col justify-between min-h-[140px]">
+              <FaTelegramPlane className="text-volt text-xl" />
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint">Telegram</p>
+                <p className="text-bone font-semibold mt-1 flex items-center gap-2">@cannachem <HiOutlineArrowUpRight className="text-bone-faint group-hover:text-volt" size={14} /></p>
+              </div>
+            </a>
+            <div className="sm:col-span-2 border border-line p-5 flex items-center gap-4">
+              <FaBitcoin className="text-signal text-2xl shrink-0" />
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint">Payment</p>
+                <p className="text-bone text-sm font-semibold">Bitcoin (BTC) only &middot; address sent after order request</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-white/10 bg-ink-deep">
-        <div className="container mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-white/30 text-xs">&copy; {new Date().getFullYear()} K2LiquidStore.com. All rights reserved.</p>
-          <div className="flex items-center gap-5 text-xs text-white/30">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-            <Link href="/refund" className="hover:text-white transition-colors">Refunds</Link>
+      {/* Sitemap */}
+      <div className="border-y border-line">
+        <div className="wrap">
+          <div className="grid grid-cols-2 md:grid-cols-4 border-x border-line divide-x divide-line">
+            <div className="p-6 lg:p-8 col-span-2 md:col-span-1">
+              <LogoMark size={44} />
+              <p className="text-bone-faint text-xs leading-relaxed mt-5 max-w-[200px]">
+                K2 paper, liquid spray, powder, etomidate and K-Pods. Batch-checked. Plain packaging. 50+ countries.
+              </p>
+            </div>
+            {columns.map(({ title, links }) => (
+              <div key={title} className="p-6 lg:p-8">
+                <p className="tag-plain text-volt mb-5">{title}</p>
+                <ul className="space-y-2.5">
+                  {links.map(({ href, label }) => (
+                    <li key={href}>
+                      <Link href={href} className="group inline-flex items-center gap-2 text-sm text-bone-muted hover:text-bone transition-colors">
+                        <HiOutlineArrowRight size={12} className="text-bone-faint -ml-5 opacity-0 group-hover:opacity-100 group-hover:ml-0 group-hover:text-volt transition-all" />
+                        {label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
+        </div>
+      </div>
+
+      {/* Giant wordmark */}
+      <div className="wrap overflow-hidden">
+        <p
+          className="font-display font-extrabold uppercase leading-none tracking-[-0.05em] text-center select-none outline-text pt-10 -mb-3 whitespace-nowrap"
+          style={{ fontSize: 'clamp(2.4rem, 10.5vw, 11rem)' }}
+          aria-hidden
+        >
+          K2LiquidStore
+        </p>
+      </div>
+
+      {/* Bottom */}
+      <div className="border-t border-line">
+        <div className="wrap h-14 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.14em] text-bone-faint">
+          <p>&copy; {new Date().getFullYear()} K2LiquidStore</p>
+          <p className="hidden sm:flex items-center gap-2"><span className="status-dot" /> Systems nominal</p>
+          <p>Research use only</p>
         </div>
       </div>
     </footer>

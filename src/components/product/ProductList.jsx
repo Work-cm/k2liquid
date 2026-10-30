@@ -234,44 +234,12 @@ export default function ProductList({ initialProducts, selectedCategory }) {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: (i) => ({
-      y: 50,
-      opacity: 0,
-      scale: 0.9,
-      rotateX: -10
-    }),
-    visible: (i) => ({
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      rotateX: 0,
-      transition: {
-        type: "spring",
-        stiffness: 300,
-        damping: 24,
-        delay: i * 0.05
-      }
-    })
-  };
-
   return (
     <div ref={productListRef} className="relative">
       {/* Search + controls bar */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row">
         <div className="relative flex-1">
-          <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-900 text-xs" />
+          <FaSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-bone-faint" />
           <input
             type="text"
             placeholder="Search products..."
@@ -279,12 +247,13 @@ export default function ProductList({ initialProducts, selectedCategory }) {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            className="w-full bg-gray-50 border border-gray-200 text-gray-900 rounded-xl pl-9 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-400 placeholder-gray-400 transition-all"
+            className="field pl-9"
           />
           {searchQuery && (
             <button
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-900 hover:text-gray-900"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-bone-faint hover:text-volt"
               onClick={() => setSearchQuery('')}
+              aria-label="Clear search"
             >
               <FaTimes className="text-xs" />
             </button>
@@ -295,7 +264,7 @@ export default function ProductList({ initialProducts, selectedCategory }) {
           name="sortBy"
           value={filters.sortBy}
           onChange={handleFilterChange}
-          className="bg-gray-50 border border-gray-200 text-gray-700 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 cursor-pointer"
+          className="field cursor-pointer sm:w-56"
         >
           <option value="newest">Newest</option>
           <option value="price-low-high">Price: Low to High</option>
@@ -306,13 +275,13 @@ export default function ProductList({ initialProducts, selectedCategory }) {
         {/* Mobile filter toggle */}
         <button
           onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className="md:hidden flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-medium hover:border-sky-300 transition-all"
+          className="btn-ghost md:hidden"
         >
-          {isFilterOpen ? <><FaTimes className="text-xs" /> Close</> : <><FaFilter className="text-xs" /> Filters</>}
+          {isFilterOpen ? <><FaTimes className="h-3 w-3" /> Close</> : <><FaFilter className="h-3 w-3" /> Filters</>}
         </button>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col gap-6 md:flex-row">
         {/* Filters sidebar */}
         <AnimatePresence>
           {(isFilterOpen || !isTouchDevice) && (
@@ -321,34 +290,38 @@ export default function ProductList({ initialProducts, selectedCategory }) {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
               transition={{ duration: 0.2 }}
-              className="md:w-56 bg-white border border-gray-200 rounded-2xl p-5 overflow-hidden flex-shrink-0 shadow-sm"
+              className="cell flex-shrink-0 overflow-hidden p-5 md:w-56"
             >
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider">Filters</h2>
-                <button onClick={clearFilters} className="text-xs text-gray-900 hover:text-sky-500 transition-colors">
+              <div className="mb-5 flex items-center justify-between border-b border-line pb-4">
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.18em] text-bone">Filters</h2>
+                <button
+                  onClick={clearFilters}
+                  className="font-mono text-[11px] uppercase tracking-[0.14em] text-bone-faint transition-colors hover:text-volt"
+                >
                   Clear all
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-5">
                 <div>
-                  <label className="block text-xs font-medium text-gray-900 mb-1.5">Category</label>
+                  <label className="field-label">Category</label>
                   <select
                     name="category"
                     value={filters.category}
                     onChange={handleFilterChange}
-                    className="w-full bg-gray-50 border border-gray-200 text-gray-700 rounded-xl p-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    className="field cursor-pointer"
                   >
                     <option value="">All Categories</option>
                     <option value="k2-paper-sheets">K2 Paper Sheets</option>
                     <option value="k2-liquid-spray">K2 Liquid Spray</option>
                     <option value="k2-powder">K2 Powder</option>
                     <option value="etomidate">Etomidate</option>
+                    <option value="vapes-kpods">Vapes / K-Pods</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-medium text-gray-900 mb-1.5">Price Range</label>
+                  <label className="field-label">Price Range</label>
                   <div className="flex gap-2">
                     <input
                       type="number"
@@ -356,7 +329,7 @@ export default function ProductList({ initialProducts, selectedCategory }) {
                       placeholder="Min"
                       value={filters.minPrice}
                       onChange={handleFilterChange}
-                      className="w-1/2 bg-gray-50 border border-gray-200 text-gray-700 rounded-xl p-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="field w-1/2"
                     />
                     <input
                       type="number"
@@ -364,18 +337,18 @@ export default function ProductList({ initialProducts, selectedCategory }) {
                       placeholder="Max"
                       value={filters.maxPrice}
                       onChange={handleFilterChange}
-                      className="w-1/2 bg-gray-50 border border-gray-200 text-gray-700 rounded-xl p-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="field w-1/2"
                     />
                   </div>
                 </div>
 
-                <label className="flex items-center gap-2 text-sm text-gray-900 cursor-pointer">
+                <label className="flex cursor-pointer items-center gap-2.5 text-sm text-bone-muted">
                   <input
                     type="checkbox"
                     name="inStock"
                     checked={filters.inStock}
                     onChange={handleFilterChange}
-                    className="rounded text-sky-500 focus:ring-sky-500 bg-gray-50 border-gray-300"
+                    className="checkbox"
                   />
                   In Stock Only
                 </label>
@@ -386,39 +359,34 @@ export default function ProductList({ initialProducts, selectedCategory }) {
 
         {/* Product grid */}
         <div className="flex-1">
-          <div className="flex items-center justify-between mb-5">
-            <p className="text-sm text-gray-900">
-              <span className="text-gray-900 font-semibold">{filteredProducts.length}</span> {filteredProducts.length === 1 ? 'product' : 'products'}
-              {searchQuery && <span className="ml-1">for &ldquo;{searchQuery}&rdquo;</span>}
+          <div className="mb-5 flex items-center justify-between">
+            <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-muted">
+              <span className="text-volt">{filteredProducts.length}</span>{' '}
+              {filteredProducts.length === 1 ? 'item' : 'items'}
+              {searchQuery && <span className="text-bone-faint"> / &ldquo;{searchQuery}&rdquo;</span>}
             </p>
           </div>
 
           {filteredProducts.length > 0 ? (
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"
-            >
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredProducts.map((product, index) => (
                 <motion.div
                   key={product._id || index}
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.04 }}
+                  transition={{ duration: 0.3, delay: Math.min(index, 10) * 0.04 }}
                 >
                   <ProductCard product={product} />
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
           ) : (
-            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-12 text-center">
-              <p className="text-gray-900 font-semibold mb-2">No products found</p>
-              <p className="text-gray-900 text-sm mb-5">Try adjusting your filters or search term.</p>
-              <button
-                onClick={clearFilters}
-                className="bg-sky-500 hover:bg-sky-600 text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-500/20"
-              >
+            <div className="cell p-12 text-center">
+              <p className="mb-2 font-display text-base font-bold uppercase tracking-wide text-bone">
+                No products found
+              </p>
+              <p className="mb-6 text-sm text-bone-muted">Try adjusting your filters or search term.</p>
+              <button onClick={clearFilters} className="btn-volt">
                 Clear Filters
               </button>
             </div>

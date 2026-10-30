@@ -76,55 +76,61 @@ export default function OrderContactForm({ cart, orderDetails }) {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const inputClass = 'bg-gray-50 border border-gray-200 text-gray-900 rounded-lg py-2.5 pl-9 pr-3 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-400 text-sm';
-  const labelClass = 'block text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5';
-  const iconClass = 'absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs';
+  const inputClass = 'field pl-9';
+  const labelClass = 'field-label';
+  const iconClass = 'absolute left-3 top-1/2 -translate-y-1/2 text-bone-faint text-xs';
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-      <div className="flex items-center gap-2 mb-5">
-        <FaUser className="text-sky-500 text-sm" />
-        <h2 className="text-lg font-bold text-gray-900">Your Details</h2>
+    <div className="cell p-6 sm:p-7">
+      <div className="mb-5 flex items-center gap-2">
+        <FaUser className="text-sm text-volt" />
+        <h2 className="font-display text-lg font-bold uppercase tracking-wide text-bone">
+          Your details
+        </h2>
       </div>
 
       {/* Method choice cards */}
       <p className={labelClass}>Choose how to continue</p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+      <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <button
           type="button"
           onClick={() => setMethod('whatsapp')}
-          className={`flex items-center gap-3 p-3.5 rounded-xl border-2 text-left transition-all ${
+          className={`flex items-center gap-3 border p-3.5 text-left transition-colors ${
             method === 'whatsapp'
-              ? 'border-sky-500 bg-sky-50/60 ring-1 ring-sky-500/20'
-              : 'border-gray-200 bg-white hover:border-sky-300'
+              ? 'border-volt bg-volt/10'
+              : 'border-line bg-night-800 hover:border-line-strong'
           }`}
         >
-          <FaWhatsapp className={method === 'whatsapp' ? 'text-sky-500' : 'text-gray-400'} />
+          <FaWhatsapp className={method === 'whatsapp' ? 'text-volt' : 'text-bone-faint'} />
           <div>
-            <p className="text-sm font-bold text-gray-900 leading-none">WhatsApp</p>
-            <p className="text-[11px] text-gray-500 mt-1">Continue privately on WhatsApp</p>
+            <p className="text-sm font-bold leading-none text-bone">WhatsApp</p>
+            <p className="mt-1 font-mono text-[10px] uppercase tracking-wide text-bone-faint">
+              Continue privately on WhatsApp
+            </p>
           </div>
         </button>
         <button
           type="button"
           onClick={() => setMethod('telegram')}
-          className={`flex items-center gap-3 p-3.5 rounded-xl border-2 text-left transition-all ${
+          className={`flex items-center gap-3 border p-3.5 text-left transition-colors ${
             method === 'telegram'
-              ? 'border-sky-500 bg-sky-50/60 ring-1 ring-sky-500/20'
-              : 'border-gray-200 bg-white hover:border-sky-300'
+              ? 'border-volt bg-volt/10'
+              : 'border-line bg-night-800 hover:border-line-strong'
           }`}
         >
-          <FaTelegramPlane className={method === 'telegram' ? 'text-sky-500' : 'text-gray-400'} />
+          <FaTelegramPlane className={method === 'telegram' ? 'text-volt' : 'text-bone-faint'} />
           <div>
-            <p className="text-sm font-bold text-gray-900 leading-none">Telegram</p>
-            <p className="text-[11px] text-gray-500 mt-1">Continue privately in Telegram</p>
+            <p className="text-sm font-bold leading-none text-bone">Telegram</p>
+            <p className="mt-1 font-mono text-[10px] uppercase tracking-wide text-bone-faint">
+              Continue privately in Telegram
+            </p>
           </div>
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className={labelClass}>Full Name</label>
+          <label className={labelClass}>Full name</label>
           <div className="relative">
             <FaUser className={iconClass} />
             <input name="name" type="text" required value={form.name} onChange={handleChange}
@@ -133,7 +139,7 @@ export default function OrderContactForm({ cart, orderDetails }) {
         </div>
 
         <div>
-          <label className={labelClass}>{method === 'whatsapp' ? 'WhatsApp Number' : 'Telegram Username'}</label>
+          <label className={labelClass}>{method === 'whatsapp' ? 'WhatsApp number' : 'Telegram username'}</label>
           <div className="relative">
             {method === 'whatsapp'
               ? <FaWhatsapp className={iconClass} />
@@ -151,7 +157,7 @@ export default function OrderContactForm({ cart, orderDetails }) {
         </div>
 
         <div>
-          <label className={labelClass}>Shipping Address</label>
+          <label className={labelClass}>Shipping address</label>
           <div className="relative">
             <FaMapMarkerAlt className={iconClass} />
             <input name="address" type="text" required value={form.address} onChange={handleChange}
@@ -162,22 +168,22 @@ export default function OrderContactForm({ cart, orderDetails }) {
         <div>
           <label className={labelClass}>Message (optional)</label>
           <div className="relative">
-            <FaCommentDots className="absolute left-3 top-3 text-gray-400 text-xs" />
+            <FaCommentDots className="absolute left-3 top-3.5 text-xs text-bone-faint" />
             <textarea name="notes" rows={3} value={form.notes} onChange={handleChange}
               placeholder="Any special requests or questions..."
-              className="bg-gray-50 border border-gray-200 text-gray-900 rounded-lg py-2.5 pl-9 pr-3 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-400 text-sm resize-none" />
+              className="field resize-none pl-9" />
           </div>
         </div>
 
         {/* Confirmation */}
-        <label className="flex items-start gap-2.5 bg-gray-50 border border-gray-200 rounded-lg p-3.5 cursor-pointer">
+        <label className="flex cursor-pointer items-start gap-2.5 border border-line bg-night-800 p-3.5">
           <input
             type="checkbox"
             checked={confirmed}
             onChange={(e) => setConfirmed(e.target.checked)}
-            className="mt-0.5 h-3.5 w-3.5 rounded border-gray-300 text-sky-500 focus:ring-sky-500"
+            className="checkbox mt-0.5"
           />
-          <span className="text-[11px] text-gray-600 leading-relaxed">
+          <span className="text-[11px] leading-relaxed text-bone-muted">
             I am a serious buyer. I understand this is a real order request and I am ready to receive
             payment instructions via {method === 'whatsapp' ? 'WhatsApp' : 'Telegram'}.
           </span>
@@ -186,13 +192,13 @@ export default function OrderContactForm({ cart, orderDetails }) {
         <button
           type="submit"
           disabled={!isValid}
-          className="w-full bg-sky-500 hover:bg-sky-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all text-sm"
+          className="btn-volt w-full disabled:cursor-not-allowed disabled:opacity-40"
         >
-          <FaPaperPlane className="text-xs" />
-          Send Order via {method === 'whatsapp' ? 'WhatsApp' : 'Telegram'} &mdash; &euro;{orderDetails.total.toFixed(2)}
+          <FaPaperPlane className="h-3.5 w-3.5" />
+          Send order via {method === 'whatsapp' ? 'WhatsApp' : 'Telegram'} &mdash; &euro;{orderDetails.total.toFixed(2)}
         </button>
 
-        <p className="text-[11px] text-gray-400 text-center">
+        <p className="text-center font-mono text-[10px] uppercase tracking-[0.14em] text-bone-faint">
           {`Your details will be sent directly to us on ${method === 'whatsapp' ? 'WhatsApp' : 'Telegram'}.`}
         </p>
       </form>

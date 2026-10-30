@@ -1,6 +1,19 @@
 import Link from 'next/link';
 
-export function LogoMark({ size = 36, className = '' }) {
+const NAVY = '#100d36';
+
+function Blade({ rotate }) {
+  return (
+    <g transform={`rotate(${rotate} 32 32)`}>
+      <path d="M32 7 L40 30 L32 34 L24 30 Z" fill="#fff" />
+      <path d="M32 9.5 L32 32" stroke={NAVY} strokeWidth="1.2" />
+      <path d="M32 7 C26.5 4.5 21.5 8 23.5 12.5 C24.8 15.5 28.6 15.2 28.6 12.4" fill="none" stroke="#fff" strokeWidth="2.4" strokeLinecap="round" />
+      <circle cx="28.6" cy="12.4" r="1.3" fill="#fff" />
+    </g>
+  );
+}
+
+export function LogoMark({ size = 36, className = '', bare = false }) {
   return (
     <svg
       width={size}
@@ -11,36 +24,29 @@ export function LogoMark({ size = 36, className = '' }) {
       className={className}
       aria-hidden
     >
-      <defs>
-        <clipPath id="k2flask"><path d="M27 6h10v15l11.4 26.2A6 6 0 0 1 43 56.5H21a6 6 0 0 1-5.4-9.3L27 21V6Z" /></clipPath>
-      </defs>
-      <circle cx="32" cy="32" r="30" fill="#0f3229" />
-      <circle cx="32" cy="32" r="30" fill="none" stroke="#c98f12" strokeWidth="2" />
-      <path d="M27 6h10v15l11.4 26.2A6 6 0 0 1 43 56.5H21a6 6 0 0 1-5.4-9.3L27 21V6Z" fill="#e0efe8" />
-      <g clipPath="url(#k2flask)">
-        <rect x="8" y="34" width="48" height="30" fill="#c98f12" />
-        <circle cx="27" cy="42" r="2.4" fill="#fdf8ec" opacity="0.75" />
-        <circle cx="36" cy="46" r="1.7" fill="#fdf8ec" opacity="0.6" />
-        <circle cx="32" cy="51" r="2.8" fill="#fdf8ec" opacity="0.5" />
+      {!bare && <rect width="64" height="64" fill={NAVY} />}
+      <g transform="rotate(45 32 32)">
+        <Blade rotate={0} />
+        <Blade rotate={90} />
+        <Blade rotate={180} />
+        <Blade rotate={270} />
+        <circle cx="32" cy="32" r="2.2" fill={NAVY} />
       </g>
-      <rect x="23" y="4" width="18" height="4" rx="2" fill="#e0efe8" />
     </svg>
   );
 }
 
-export default function Logo({ size = 36, dark = false, showDomain = true, href = '/', className = '' }) {
+export default function Logo({ size = 36, showDomain = true, href = '/', className = '' }) {
   return (
-    <Link href={href} className={`flex items-center gap-2.5 group w-fit ${className}`} aria-label="K2LiquidStore home">
-      <LogoMark size={size} className="shrink-0 drop-shadow-[0_6px_14px_rgba(15,50,41,0.35)] transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-6" />
+    <Link href={href} className={`flex items-center gap-3 group w-fit ${className}`} aria-label="K2PaperK2Liquid home">
+      <LogoMark size={size} className="shrink-0 transition-transform duration-500 group-hover:rotate-90" />
       <span className="flex flex-col leading-none">
-        <span className={dark ? 'text-white' : 'text-ink'} style={{ fontSize: size * 0.52 }}>
-          <span className="font-display font-black tracking-tight">K2</span>
-          <span className="font-bold tracking-tight"> Liquid</span>
-          <span className="font-bold tracking-tight text-cyan-600">Store</span>
+        <span className="font-display font-extrabold tracking-[-0.04em] text-bone uppercase" style={{ fontSize: size * 0.46 }}>
+          K2Paper<span className="text-volt">K2Liquid</span>
         </span>
         {showDomain && (
-          <span className={`text-[9px] tracking-[0.22em] uppercase font-semibold mt-1 ${dark ? 'text-white/40' : 'text-gray-400'}`}>
-            k2liquidstore.com
+          <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-bone-faint mt-1.5">
+            k2paperk2liquid
           </span>
         )}
       </span>

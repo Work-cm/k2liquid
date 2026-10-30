@@ -179,70 +179,45 @@ export default function ProfilePage() {
 
   if (loading || !isAuthenticated) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black pt-24 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sky-500"></div>
+      <div className="flex min-h-screen items-center justify-center bg-night-900">
+        <span className="loader h-10 w-10" />
       </div>
     );
   }
 
+  const tabs = [
+    { id: 'profile', label: 'Profile', Icon: FaUser },
+    { id: 'orders', label: 'Orders', Icon: FaShoppingBag },
+    { id: 'shipping', label: 'Shipping address', Icon: FaMapMarkerAlt },
+    { id: 'password', label: 'Change password', Icon: FaLock },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black pt-24">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold text-white mb-8">My Account</h1>
-          
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <div className="min-h-screen bg-night-900">
+      <div className="wrap max-w-6xl py-10 sm:py-14">
+        <p className="tag mb-4">account</p>
+        <h1 className="h-display mb-8 text-3xl sm:text-4xl">My account</h1>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
             {/* Sidebar */}
             <div className="md:col-span-1">
-              <div className="bg-gray-100 rounded-lg p-4">
-                <div className="flex flex-col space-y-2">
-                  <button
-                    onClick={() => setActiveTab('profile')}
-                    className={`flex items-center p-3 rounded-lg transition-colors ${
-                      activeTab === 'profile' 
-                        ? 'bg-sky-500 text-white' 
-                        : 'text-gray-900 hover:bg-gray-700'
-                    }`}
-                  >
-                    <FaUser className="mr-3" /> Profile
-                  </button>
-                  
-                  <button
-                    onClick={() => setActiveTab('orders')}
-                    className={`flex items-center p-3 rounded-lg transition-colors ${
-                      activeTab === 'orders' 
-                        ? 'bg-sky-500 text-white' 
-                        : 'text-gray-900 hover:bg-gray-700'
-                    }`}
-                  >
-                    <FaShoppingBag className="mr-3" /> Orders
-                  </button>
-                  
-                  <button
-                    onClick={() => setActiveTab('shipping')}
-                    className={`flex items-center p-3 rounded-lg transition-colors ${
-                      activeTab === 'shipping' 
-                        ? 'bg-sky-500 text-white' 
-                        : 'text-gray-900 hover:bg-gray-700'
-                    }`}
-                  >
-                    <FaMapMarkerAlt className="mr-3" /> Shipping Address
-                  </button>
-                  
-                  <button
-                    onClick={() => setActiveTab('password')}
-                    className={`flex items-center p-3 rounded-lg transition-colors ${
-                      activeTab === 'password' 
-                        ? 'bg-sky-500 text-white' 
-                        : 'text-gray-900 hover:bg-gray-700'
-                    }`}
-                  >
-                    <FaLock className="mr-3" /> Change Password
-                  </button>
-                  
+              <div className="cell p-3">
+                <div className="flex flex-col space-y-1">
+                  {tabs.map(({ id, label, Icon }) => (
+                    <button
+                      key={id}
+                      onClick={() => setActiveTab(id)}
+                      className={`flex items-center border px-3 py-3 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                        activeTab === id
+                          ? 'border-volt bg-volt text-volt-ink'
+                          : 'border-transparent text-bone-muted hover:border-line hover:text-bone'
+                      }`}
+                    >
+                      <Icon className="mr-3" /> {label}
+                    </button>
+                  ))}
                   <button
                     onClick={handleLogout}
-                    className="flex items-center p-3 rounded-lg text-gray-900 hover:bg-gray-700 transition-colors"
+                    className="flex items-center border border-transparent px-3 py-3 font-mono text-[11px] uppercase tracking-[0.12em] text-bone-muted transition-colors hover:border-signal hover:text-signal"
                   >
                     <FaSignOutAlt className="mr-3" /> Logout
                   </button>
@@ -252,15 +227,15 @@ export default function ProfilePage() {
             
             {/* Main Content */}
             <div className="md:col-span-3">
-              <div className="bg-gray-100 rounded-lg p-6">
+              <div className="cell p-6 sm:p-8">
                 {/* Profile Tab */}
                 {activeTab === 'profile' && (
                   <div>
-                    <h2 className="text-xl font-semibold text-white mb-6">Profile Information</h2>
+                    <h2 className="mb-6 font-display text-xl font-bold text-bone">Profile Information</h2>
                     
                     <form onSubmit={handleProfileUpdate} className="space-y-6">
                       <div>
-                        <label htmlFor="name" className="block text-white mb-2">
+                        <label htmlFor="name" className="field-label">
                           Full Name
                         </label>
                         <input
@@ -268,13 +243,13 @@ export default function ProfilePage() {
                           type="text"
                           value={profileData.name}
                           onChange={(e) => setProfileData({...profileData, name: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label htmlFor="email" className="block text-white mb-2">
+                        <label htmlFor="email" className="field-label">
                           Email Address
                         </label>
                         <input
@@ -282,7 +257,7 @@ export default function ProfilePage() {
                           type="email"
                           value={profileData.email}
                           onChange={(e) => setProfileData({...profileData, email: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
@@ -292,13 +267,11 @@ export default function ProfilePage() {
                         whileTap={{ scale: 0.98 }}
                         type="submit"
                         disabled={updating}
-                        className={`bg-sky-500 hover:bg-sky-500 text-white font-semibold py-3 px-6 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 ${
-                          updating ? 'opacity-70 cursor-not-allowed translate-y-0' : ''
-                        }`}
+                        className="btn-volt disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {updating ? (
                           <div className="flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+                            <span className="loader mr-2 h-4 w-4" />
                             <span>Updating...</span>
                           </div>
                         ) : (
@@ -312,55 +285,55 @@ export default function ProfilePage() {
                 {/* Orders Tab */}
                 {activeTab === 'orders' && (
                   <div>
-                    <h2 className="text-xl font-semibold text-white mb-6">Order History</h2>
+                    <h2 className="mb-6 font-display text-xl font-bold text-bone">Order History</h2>
                     
                     {loadingOrders ? (
                       <div className="flex justify-center py-8">
-                        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sky-500"></div>
+                        <span className="loader h-10 w-10" />
                       </div>
                     ) : orders.length > 0 ? (
                       <div className="space-y-6">
                         {orders.map((order) => (
-                          <div key={order._id} className="bg-gray-700 rounded-lg p-4">
-                            <div className="flex flex-wrap justify-between items-center mb-4">
+                          <div key={order._id} className="border border-line bg-night-800 p-4">
+                            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                               <div>
-                                <p className="text-gray-900 text-sm">Order ID</p>
-                                <p className="text-white font-mono">{order._id}</p>
+                                <p className="field-label mb-1">Order ID</p>
+                                <p className="font-mono text-xs text-bone">{order._id}</p>
                               </div>
                               <div>
-                                <p className="text-gray-900 text-sm">Date</p>
-                                <p className="text-white">{new Date(order.createdAt).toLocaleDateString()}</p>
+                                <p className="field-label mb-1">Date</p>
+                                <p className="text-sm text-bone">{new Date(order.createdAt).toLocaleDateString()}</p>
                               </div>
                               <div>
-                                <p className="text-gray-900 text-sm">Total</p>
-                                <p className="text-white font-semibold">${order.totalPrice.toFixed(2)}</p>
+                                <p className="field-label mb-1">Total</p>
+                                <p className="font-mono text-sm font-bold text-volt">${order.totalPrice.toFixed(2)}</p>
                               </div>
                               <div>
-                                <p className="text-gray-900 text-sm">Status</p>
-                                <span className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                <p className="field-label mb-1">Status</p>
+                                <span className={`inline-block px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.1em] ${
                                   order.isPaid 
-                                    ? 'bg-green-500/20 text-green-400' 
-                                    : 'bg-yellow-500/20 text-yellow-400'
+                                    ? 'bg-volt/15 text-volt' 
+                                    : 'bg-signal/15 text-signal'
                                 }`}>
                                   {order.isPaid ? 'Paid' : 'Pending'}
                                 </span>
                               </div>
                             </div>
                             
-                            <div className="border-t border-gray-600 pt-4">
-                              <p className="text-gray-900 text-sm mb-2">Items</p>
+                            <div className="border-t border-line pt-4">
+                              <p className="field-label mb-2">Items</p>
                               <div className="space-y-2">
                                 {order.orderItems.map((item) => (
                                   <div key={item._id} className="flex justify-between">
                                     <div className="flex items-center">
-                                      <span className="text-white">{item.name}</span>
+                                      <span className="text-sm text-bone">{item.name}</span>
                                       {item.variant && (
-                                        <span className="text-gray-900 ml-2">({item.variant.quantity}g)</span>
+                                        <span className="ml-2 text-xs text-bone-faint">({item.variant.quantity}g)</span>
                                       )}
-                                      <span className="text-gray-900 mx-2">&times;</span>
-                                      <span className="text-white">{item.quantity}</span>
+                                      <span className="mx-2 text-bone-faint">&times;</span>
+                                      <span className="text-sm text-bone">{item.quantity}</span>
                                     </div>
-                                    <span className="text-white">${(item.price * item.quantity).toFixed(2)}</span>
+                                    <span className="font-mono text-sm text-bone">${(item.price * item.quantity).toFixed(2)}</span>
                                   </div>
                                 ))}
                               </div>
@@ -369,22 +342,19 @@ export default function ProfilePage() {
                             <div className="mt-4">
                               <Link 
                                 href={`/orders/${order._id}`}
-                                className="text-sky-400 hover:text-sky-300 text-sm"
+                                className="font-mono text-[11px] uppercase tracking-[0.14em] text-volt transition-colors hover:text-bone"
                               >
-                                View Order Details
+                                View order details
                               </Link>
                             </div>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <div className="text-center py-8">
-                        <p className="text-gray-900 mb-4">You haven't placed any orders yet.</p>
-                        <Link 
-                          href="/products" 
-                          className="bg-sky-500 hover:bg-sky-500 text-white font-semibold py-2 px-4 rounded-xl transition-colors"
-                        >
-                          Browse Products
+                      <div className="py-8 text-center">
+                        <p className="mb-4 text-bone-muted">You haven&apos;t placed any orders yet.</p>
+                        <Link href="/products" className="btn-volt">
+                          Browse products
                         </Link>
                       </div>
                     )}
@@ -394,11 +364,11 @@ export default function ProfilePage() {
                 {/* Shipping Address Tab */}
                 {activeTab === 'shipping' && (
                   <div>
-                    <h2 className="text-xl font-semibold text-white mb-6">Shipping Address</h2>
+                    <h2 className="mb-6 font-display text-xl font-bold text-bone">Shipping Address</h2>
                     
                     <form onSubmit={handleShippingUpdate} className="space-y-6">
                       <div>
-                        <label htmlFor="fullName" className="block text-white mb-2">
+                        <label htmlFor="fullName" className="field-label">
                           Full Name
                         </label>
                         <input
@@ -406,13 +376,13 @@ export default function ProfilePage() {
                           type="text"
                           value={shippingData.fullName}
                           onChange={(e) => setShippingData({...shippingData, fullName: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label htmlFor="address" className="block text-white mb-2">
+                        <label htmlFor="address" className="field-label">
                           Street Address
                         </label>
                         <input
@@ -420,14 +390,14 @@ export default function ProfilePage() {
                           type="text"
                           value={shippingData.address}
                           onChange={(e) => setShippingData({...shippingData, address: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
                       
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label htmlFor="city" className="block text-white mb-2">
+                          <label htmlFor="city" className="field-label">
                             City
                           </label>
                           <input
@@ -435,13 +405,13 @@ export default function ProfilePage() {
                             type="text"
                             value={shippingData.city}
                             onChange={(e) => setShippingData({...shippingData, city: e.target.value})}
-                            className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="field"
                             required
                           />
                         </div>
                         
                         <div>
-                          <label htmlFor="postalCode" className="block text-white mb-2">
+                          <label htmlFor="postalCode" className="field-label">
                             Postal Code
                           </label>
                           <input
@@ -449,14 +419,14 @@ export default function ProfilePage() {
                             type="text"
                             value={shippingData.postalCode}
                             onChange={(e) => setShippingData({...shippingData, postalCode: e.target.value})}
-                            className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                            className="field"
                             required
                           />
                         </div>
                       </div>
                       
                       <div>
-                        <label htmlFor="country" className="block text-white mb-2">
+                        <label htmlFor="country" className="field-label">
                           Country
                         </label>
                         <input
@@ -464,7 +434,7 @@ export default function ProfilePage() {
                           type="text"
                           value={shippingData.country}
                           onChange={(e) => setShippingData({...shippingData, country: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
@@ -474,13 +444,11 @@ export default function ProfilePage() {
                         whileTap={{ scale: 0.98 }}
                         type="submit"
                         disabled={updating}
-                        className={`bg-sky-500 hover:bg-sky-500 text-white font-semibold py-3 px-6 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 ${
-                          updating ? 'opacity-70 cursor-not-allowed translate-y-0' : ''
-                        }`}
+                        className="btn-volt disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {updating ? (
                           <div className="flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+                            <span className="loader mr-2 h-4 w-4" />
                             <span>Updating...</span>
                           </div>
                         ) : (
@@ -494,11 +462,11 @@ export default function ProfilePage() {
                 {/* Change Password Tab */}
                 {activeTab === 'password' && (
                   <div>
-                    <h2 className="text-xl font-semibold text-white mb-6">Change Password</h2>
+                    <h2 className="mb-6 font-display text-xl font-bold text-bone">Change Password</h2>
                     
                     <form onSubmit={handlePasswordUpdate} className="space-y-6">
                       <div>
-                        <label htmlFor="currentPassword" className="block text-white mb-2">
+                        <label htmlFor="currentPassword" className="field-label">
                           Current Password
                         </label>
                         <input
@@ -506,13 +474,13 @@ export default function ProfilePage() {
                           type="password"
                           value={passwordData.currentPassword}
                           onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label htmlFor="newPassword" className="block text-white mb-2">
+                        <label htmlFor="newPassword" className="field-label">
                           New Password
                         </label>
                         <input
@@ -520,17 +488,17 @@ export default function ProfilePage() {
                           type="password"
                           value={passwordData.newPassword}
                           onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                           minLength={6}
                         />
-                        <p className="text-gray-900 text-sm mt-1">
+                        <p className="mt-1 text-xs text-bone-faint">
                           Must be at least 6 characters
                         </p>
                       </div>
                       
                       <div>
-                        <label htmlFor="confirmPassword" className="block text-white mb-2">
+                        <label htmlFor="confirmPassword" className="field-label">
                           Confirm New Password
                         </label>
                         <input
@@ -538,7 +506,7 @@ export default function ProfilePage() {
                           type="password"
                           value={passwordData.confirmPassword}
                           onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
-                          className="bg-gray-700 text-white rounded-lg py-3 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
+                          className="field"
                           required
                         />
                       </div>
@@ -548,13 +516,11 @@ export default function ProfilePage() {
                         whileTap={{ scale: 0.98 }}
                         type="submit"
                         disabled={updating}
-                        className={`bg-sky-500 hover:bg-sky-500 text-white font-semibold py-3 px-6 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 ${
-                          updating ? 'opacity-70 cursor-not-allowed translate-y-0' : ''
-                        }`}
+                        className="btn-volt disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         {updating ? (
                           <div className="flex items-center justify-center">
-                            <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2"></div>
+                            <span className="loader mr-2 h-4 w-4" />
                             <span>Updating...</span>
                           </div>
                         ) : (
@@ -568,7 +534,6 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

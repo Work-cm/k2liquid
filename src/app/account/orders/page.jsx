@@ -68,98 +68,98 @@ export default function OrdersPage() {
 
   if (loading || pageLoading) {
     return (
-      <div className="min-h-screen bg-white pt-24 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sky-500" />
+      <div className="flex min-h-screen items-center justify-center bg-night-900">
+        <span className="loader h-10 w-10" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20">
-      <div className="container mx-auto px-4 max-w-4xl">
+    <div className="min-h-screen bg-night-900 pb-20">
+      <div className="wrap max-w-4xl py-10 sm:py-14">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-gray-900 mb-6">
-          <Link href="/" className="hover:text-gray-900">Home</Link>
+        <nav className="mb-6 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint" aria-label="Breadcrumb">
+          <Link href="/" className="transition-colors hover:text-volt">Home</Link>
           <span>/</span>
-          <Link href="/account" className="hover:text-gray-900">Account</Link>
+          <Link href="/profile" className="transition-colors hover:text-volt">Account</Link>
           <span>/</span>
-          <span className="text-gray-900">My Orders</span>
-        </div>
+          <span className="text-bone-muted">My Orders</span>
+        </nav>
 
-        <h1 className="text-2xl font-extrabold text-gray-900 mb-8">My Orders</h1>
+        <p className="tag mb-4">account.orders</p>
+        <h1 className="h-display mb-8 text-3xl sm:text-4xl">My orders</h1>
 
         {error ? (
-          <div className="bg-sky-500/10 border border-sky-500/20 text-sky-400 text-sm p-4 rounded-xl flex items-center gap-3">
-            <FaExclamationTriangle className="flex-shrink-0" />
+          <div className="flex items-center gap-3 border border-signal/40 bg-signal/10 p-4 text-sm text-bone">
+            <FaExclamationTriangle className="flex-shrink-0 text-signal" />
             <p>{error}</p>
           </div>
         ) : orders.length === 0 ? (
-          <div className="bg-gray-50/60 border border-gray-700/50 rounded-2xl p-12 text-center">
-            <div className="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-              <FaClipboardList className="text-gray-900 text-xl" />
+          <div className="cell p-12 text-center">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center border border-volt/40 bg-volt/10">
+              <FaClipboardList className="text-xl text-volt" />
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">No Orders Yet</h2>
-            <p className="text-gray-900 text-sm mb-6">You haven&apos;t placed any orders yet.</p>
-            <Link href="/products"
-              className="bg-sky-500 hover:bg-sky-500 text-white text-sm font-semibold py-2.5 px-6 rounded-xl inline-block transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30">
-              Start Shopping
+            <h2 className="h-display mb-2 text-lg">No orders yet</h2>
+            <p className="mb-6 text-sm text-bone-muted">You haven&apos;t placed any orders yet.</p>
+            <Link href="/products" className="btn-volt">
+              Start shopping
             </Link>
           </div>
         ) : (
           <div className="space-y-4">
             {orders.map(order => (
-              <div key={order._id} className="bg-gray-50/60 border border-gray-700/50 rounded-2xl overflow-hidden">
-                <div className="bg-gray-100/60 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-700/50">
+              <div key={order._id} className="cell overflow-hidden">
+                <div className="flex flex-col gap-3 border-b border-line bg-night-800 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
-                    <p className="text-xs text-gray-900 mb-0.5">Order</p>
-                    <p className="text-gray-900 font-mono font-semibold text-sm">{order.orderNumber}</p>
+                    <p className="field-label mb-0.5">Order</p>
+                    <p className="font-mono text-sm font-semibold text-bone">{order.orderNumber}</p>
                   </div>
                   <div className="flex flex-wrap gap-5">
                     <div>
-                      <p className="text-xs text-gray-900 mb-0.5">Date</p>
-                      <p className="text-white text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
+                      <p className="field-label mb-0.5">Date</p>
+                      <p className="text-sm text-bone">{new Date(order.createdAt).toLocaleDateString()}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-900 mb-0.5">Total</p>
-                      <p className="text-white text-sm font-semibold">&euro;{order.totalPrice.toFixed(2)}</p>
+                      <p className="field-label mb-0.5">Total</p>
+                      <p className="font-mono text-sm font-bold text-volt">&euro;{order.totalPrice.toFixed(2)}</p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-900 mb-0.5">Status</p>
-                      <p className={`text-sm font-semibold capitalize ${
-                        order.status === 'delivered' ? 'text-green-400' :
-                        order.status === 'shipped' ? 'text-blue-400' :
-                        order.status === 'processing' ? 'text-yellow-400' :
-                        order.status === 'cancelled' ? 'text-sky-400' :
-                        'text-sky-400'
+                      <p className="field-label mb-0.5">Status</p>
+                      <p className={`font-mono text-sm font-bold uppercase tracking-[0.08em] ${
+                        order.status === 'delivered' ? 'text-volt' :
+                        order.status === 'shipped' ? 'text-bone' :
+                        order.status === 'processing' ? 'text-signal' :
+                        order.status === 'cancelled' ? 'text-bone-faint line-through' :
+                        'text-bone-muted'
                       }`}>{order.status}</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="px-5 py-4">
-                  <p className="text-xs font-semibold text-gray-900 uppercase tracking-wider mb-3">Items</p>
+                  <p className="field-label mb-3">Items</p>
                   <div className="space-y-3">
                     {order.items.map((item, index) => (
-                      <div key={index} className="flex justify-between items-center">
+                      <div key={index} className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                            <FaBox className="text-gray-900 text-xs" />
+                          <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center border border-line bg-night-800">
+                            <FaBox className="text-xs text-bone-muted" />
                           </div>
                           <div>
-                            <p className="text-white text-sm">{item.name}</p>
-                            <p className="text-gray-900 text-xs">Qty: {item.quantity}</p>
+                            <p className="text-sm text-bone">{item.name}</p>
+                            <p className="text-xs text-bone-faint">Qty: {item.quantity}</p>
                           </div>
                         </div>
-                        <p className="text-white text-sm">&euro;{(item.price * item.quantity).toFixed(2)}</p>
+                        <p className="font-mono text-sm text-bone">&euro;{(item.price * item.quantity).toFixed(2)}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="px-5 py-3 border-t border-gray-700/50 flex justify-end">
+                <div className="flex justify-end border-t border-line px-5 py-3">
                   <Link href={`/account/orders/${order._id}`}
-                    className="text-sky-400 hover:text-sky-300 text-sm font-medium transition-colors">
-                    View Details &rarr;
+                    className="font-mono text-[11px] uppercase tracking-[0.14em] text-volt transition-colors hover:text-bone">
+                    View details &rarr;
                   </Link>
                 </div>
               </div>

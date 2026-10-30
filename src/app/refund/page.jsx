@@ -3,7 +3,7 @@ import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 
 export const metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com'),
-  title: 'Return & Refund Policy | K2LiquidStore',
+  title: 'Return & Refund Policy',
   description: 'Read the K2LiquidStore return and refund policy for K2 paper, spray, powder and etomidate. Learn how to request returns for defective, damaged or incorrect products within 48 hours.',
   keywords: [
     'return policy', 'refund policy', 'k2 product returns',
@@ -14,50 +14,50 @@ export const metadata = {
 
 export default function RefundPolicyPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-night-900">
 
       {/* Hero */}
-      <section className="relative border-b border-gray-100 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-sky-50 to-white pointer-events-none" />
-        <div className="relative z-10 container mx-auto px-6 pt-32 pb-14 max-w-3xl">
-          <nav className="flex items-center gap-2 text-xs text-gray-400 mb-8">
-            <Link href="/" className="hover:text-sky-500 transition-colors">Home</Link>
+      <section className="relative overflow-hidden border-b border-line">
+        <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-volt/60 to-transparent" />
+        <div className="wrap relative z-10 max-w-3xl pb-14 pt-16 sm:pt-20">
+          <nav className="mb-8 flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint" aria-label="Breadcrumb">
+            <Link href="/" className="transition-colors hover:text-volt">Home</Link>
             <span>/</span>
-            <span className="text-gray-900">Refund Policy</span>
+            <span className="text-bone-muted">Refund Policy</span>
           </nav>
-          <p className="text-sky-500 text-xs font-bold uppercase tracking-[0.25em] mb-3">Returns &amp; Refunds</p>
-          <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-4">
+          <p className="tag mb-4">returns &amp; refunds</p>
+          <h1 className="h-display mb-4 text-4xl md:text-5xl">
             Fair, transparent refund policy.
           </h1>
-          <p className="text-gray-900 text-base leading-relaxed max-w-xl">
+          <p className="max-w-xl text-base leading-relaxed text-bone-muted">
             Due to the nature of our products, all sales are final unless the product is defective, damaged, or incorrect. Claims are processed within 7 business days.
           </p>
-          <p className="text-gray-400 text-xs mt-4">Last updated: December 3, 2025</p>
+          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.14em] text-bone-faint">Last updated: December 3, 2025</p>
         </div>
       </section>
 
       {/* Quick reference strip */}
-      <section className="border-b border-gray-100">
-        <div className="container mx-auto px-6 py-8 max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-5">
-          <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <FaCheckCircle className="text-emerald-500 text-sm" />
-              <h3 className="text-gray-900 font-bold text-sm">Eligible for Return</h3>
+      <section className="border-b border-line">
+        <div className="wrap grid max-w-3xl grid-cols-1 gap-5 py-8 sm:grid-cols-2">
+          <div className="border border-volt/40 bg-volt/5 p-5">
+            <div className="mb-3 flex items-center gap-2">
+              <FaCheckCircle className="text-sm text-volt" />
+              <h3 className="font-display text-sm font-bold uppercase tracking-wide text-volt">Eligible for return</h3>
             </div>
-            <ul className="text-sm text-gray-900 space-y-1.5">
+            <ul className="space-y-1.5 text-sm text-bone">
               {['Defective products', 'Damaged during shipping', 'Wrong items received', 'Missing items from order'].map(item => (
-                <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0 mt-2" />{item}</li>
+                <li key={item} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 bg-volt" />{item}</li>
               ))}
             </ul>
           </div>
-          <div className="bg-red-50 border border-red-200 rounded-xl p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <FaTimesCircle className="text-red-400 text-sm" />
-              <h3 className="text-gray-900 font-bold text-sm">NOT Eligible</h3>
+          <div className="border border-signal/40 bg-signal/10 p-5">
+            <div className="mb-3 flex items-center gap-2">
+              <FaTimesCircle className="text-sm text-signal" />
+              <h3 className="font-display text-sm font-bold uppercase tracking-wide text-signal">Not eligible</h3>
             </div>
-            <ul className="text-sm text-gray-900 space-y-1.5">
+            <ul className="space-y-1.5 text-sm text-bone">
               {['Opened or used products', 'Change of mind', 'Customer ordering error', 'Past return window'].map(item => (
-                <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-red-400 shrink-0 mt-2" />{item}</li>
+                <li key={item} className="flex gap-2"><span className="mt-2 h-1 w-1 shrink-0 bg-signal" />{item}</li>
               ))}
             </ul>
           </div>
@@ -65,13 +65,13 @@ export default function RefundPolicyPage() {
       </section>
 
       {/* Main content */}
-      <article className="container mx-auto px-6 py-16 max-w-3xl space-y-14 text-gray-900 text-[15px] leading-relaxed">
+      <article className="wrap max-w-3xl space-y-14 py-16 text-[15px] leading-relaxed text-bone-muted">
 
         {/* 1 — Eligibility */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">1. Return Eligibility</h2>
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">1. Return Eligibility</h2>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">Acceptable Return Reasons</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">Acceptable Return Reasons</h3>
           <p className="mb-4">We accept returns ONLY in the following circumstances:</p>
           <div className="space-y-3 mb-8">
             {[
@@ -80,18 +80,18 @@ export default function RefundPolicyPage() {
               { title: 'Wrong Items Shipped', desc: 'You received a different product than ordered', window: '48 hours' },
               { title: 'Missing Items', desc: 'Items listed on your order are missing', window: '48 hours' },
             ].map(({ title, desc, window }) => (
-              <div key={title} className="flex gap-4 border border-gray-200 rounded-xl p-4">
-                <span className="w-1.5 rounded-full bg-emerald-400 shrink-0 self-stretch" />
+              <div key={title} className="flex gap-4 border border-line rounded-xl p-4">
+                <span className="w-1.5 rounded-full bg-volt shrink-0 self-stretch" />
                 <div className="flex-1">
-                  <p className="font-bold text-gray-900 text-sm">{title}</p>
+                  <p className="font-bold text-bone text-sm">{title}</p>
                   <p className="text-sm">{desc}</p>
-                  <p className="text-xs text-gray-400 mt-1">Report within {window} of delivery</p>
+                  <p className="text-xs text-bone-faint mt-1">Report within {window} of delivery</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">Non-Returnable Items</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">Non-Returnable Items</h3>
           <ul className="space-y-2 ml-1">
             {[
               ['Opened or Used Products', 'Cannot be returned for safety and legal reasons'],
@@ -101,7 +101,7 @@ export default function RefundPolicyPage() {
               ['Improperly Stored Products', 'Damage due to improper handling by customer'],
             ].map(([t, d]) => (
               <li key={t} className="flex gap-3">
-                <FaTimesCircle className="text-red-400 text-xs shrink-0 mt-1.5" />
+                <FaTimesCircle className="text-signal text-xs shrink-0 mt-1.5" />
                 <span><strong>{t}:</strong> {d}</span>
               </li>
             ))}
@@ -110,9 +110,9 @@ export default function RefundPolicyPage() {
 
         {/* 2 — Process */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">2. Return Process</h2>
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">2. Return Process</h2>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">How to Request a Return</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">How to Request a Return</h3>
           <div className="space-y-4 mb-8">
             {[
               { title: 'Contact Us Immediately', desc: 'Message us on WhatsApp or Telegram with your order number, product name, and reason.' },
@@ -123,21 +123,21 @@ export default function RefundPolicyPage() {
               { title: 'Receive Refund or Replacement', desc: 'Once inspected, we process your refund within 7-14 business days.' },
             ].map(({ title, desc }, i) => (
               <div key={i} className="flex gap-4">
-                <span className="text-sky-500 font-black text-sm mt-0.5 w-5 shrink-0">0{i + 1}</span>
+                <span className="text-volt font-black text-sm mt-0.5 w-5 shrink-0">0{i + 1}</span>
                 <div>
-                  <p className="font-bold text-gray-900 text-sm">{title}</p>
+                  <p className="font-bold text-bone text-sm">{title}</p>
                   <p className="text-sm">{desc}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">Return Shipping</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">Return Shipping</h3>
           <div className="space-y-3">
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm">
+            <div className="border border-volt/40 bg-volt/10 rounded-xl p-4 text-sm">
               <strong>Our Error:</strong> We provide a prepaid return label. No cost to you.
             </div>
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm">
+            <div className="border border-signal/40 bg-signal/10 rounded-xl p-4 text-sm">
               <strong>Customer Error / Change of Mind:</strong> Returns not accepted. All sales are final.
             </div>
           </div>
@@ -145,26 +145,26 @@ export default function RefundPolicyPage() {
 
         {/* 3 — Refund Policy */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">3. Refund Policy</h2>
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">3. Refund Policy</h2>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">Refund Methods</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">Refund Methods</h3>
           <div className="space-y-3 mb-6">
-            <div className="border border-gray-200 rounded-xl p-5">
-              <p className="font-bold text-gray-900 text-sm mb-1">Original Payment Method</p>
+            <div className="border border-line rounded-xl p-5">
+              <p className="font-bold text-bone text-sm mb-1">Original Payment Method</p>
               <p className="text-sm mb-2">Refunds go to the original payment method used.</p>
-              <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-gray-400">
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-xs text-bone-faint">
                 <span>Credit/Debit: 5-10 days</span>
                 <span>Bank Transfer: 7-14 days</span>
                 <span>Other: Up to 14 days</span>
               </div>
             </div>
-            <div className="border border-gray-200 rounded-xl p-5">
-              <p className="font-bold text-gray-900 text-sm mb-1">Store Credit (Optional)</p>
+            <div className="border border-line rounded-xl p-5">
+              <p className="font-bold text-bone text-sm mb-1">Store Credit (Optional)</p>
               <p className="text-sm">Choose store credit for an instant 10% bonus (e.g. &euro;100 refund = &euro;110 credit). No expiration.</p>
             </div>
           </div>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">What&apos;s Refunded</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">What&apos;s Refunded</h3>
           <ul className="space-y-2 ml-1 mb-6">
             {[
               [true, 'Product Price', 'Full refund of the product price'],
@@ -173,13 +173,13 @@ export default function RefundPolicyPage() {
               [false, 'Return Shipping Costs', 'Deducted from refund if customer is responsible'],
             ].map(([ok, t, d]) => (
               <li key={t} className="flex gap-3">
-                {ok ? <FaCheckCircle className="text-emerald-500 text-xs shrink-0 mt-1.5" /> : <FaTimesCircle className="text-red-400 text-xs shrink-0 mt-1.5" />}
+                {ok ? <FaCheckCircle className="text-volt text-xs shrink-0 mt-1.5" /> : <FaTimesCircle className="text-signal text-xs shrink-0 mt-1.5" />}
                 <span><strong>{t}:</strong> {d}</span>
               </li>
             ))}
           </ul>
 
-          <h3 className="text-lg font-bold text-gray-900 mb-3">Partial Refunds</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">Partial Refunds</h3>
           <p className="mb-3">In some cases, we may issue a partial refund:</p>
           <ul className="space-y-2 ml-1">
             {[
@@ -189,7 +189,7 @@ export default function RefundPolicyPage() {
               'Missing accessories or documentation',
             ].map(item => (
               <li key={item} className="flex gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shrink-0 mt-2" />
+                <span className="w-1.5 h-1.5 rounded-full bg-volt shrink-0 mt-2" />
                 <span>{item}</span>
               </li>
             ))}
@@ -198,7 +198,7 @@ export default function RefundPolicyPage() {
 
         {/* 4 — Replacements */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">4. Replacement Policy</h2>
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">4. Replacement Policy</h2>
           <p className="mb-4">We offer replacements for defective, wrong, damaged, or missing items (subject to availability).</p>
           <div className="space-y-3 mb-4">
             {[
@@ -209,23 +209,23 @@ export default function RefundPolicyPage() {
               'If unavailable, we offer a full refund or alternative product',
             ].map((step, i) => (
               <div key={i} className="flex gap-4">
-                <span className="text-sky-500 font-black text-sm mt-0.5 w-5 shrink-0">0{i + 1}</span>
+                <span className="text-volt font-black text-sm mt-0.5 w-5 shrink-0">0{i + 1}</span>
                 <p className="text-sm">{step}</p>
               </div>
             ))}
           </div>
-          <div className="bg-sky-50 border border-sky-100 rounded-xl p-4 text-sm text-sky-700">
+          <div className="border border-volt/30 bg-volt/5 rounded-xl p-4 text-sm text-bone">
             <strong>Note:</strong> Replacements are subject to stock. If the product is unavailable, we&apos;ll offer a full refund or equivalent alternative.
           </div>
         </section>
 
         {/* 5 — Damaged/Defective */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">5. Damaged or Defective Products</h2>
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-5 text-sm text-amber-700">
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">5. Damaged or Defective Products</h2>
+          <div className="border border-signal/40 bg-signal/10 rounded-xl p-4 mb-5 text-sm text-bone-muted">
             <strong>Important:</strong> Inspect your package immediately upon delivery. Report any damage within 24 hours with photos.
           </div>
-          <h3 className="text-lg font-bold text-gray-900 mb-3">Required Documentation</h3>
+          <h3 className="mb-3 font-display text-base font-bold uppercase tracking-wide text-bone">Required Documentation</h3>
           <ul className="space-y-2 ml-1">
             {[
               ['Clear Photos', 'Multiple angles of the product and packaging'],
@@ -235,7 +235,7 @@ export default function RefundPolicyPage() {
               ['Order Information', 'Order number and date of delivery'],
             ].map(([t, d]) => (
               <li key={t} className="flex gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shrink-0 mt-2" />
+                <span className="w-1.5 h-1.5 rounded-full bg-volt shrink-0 mt-2" />
                 <span><strong>{t}:</strong> {d}</span>
               </li>
             ))}
@@ -244,12 +244,12 @@ export default function RefundPolicyPage() {
 
         {/* 6 — Cancellations */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">6. Order Cancellations</h2>
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">6. Order Cancellations</h2>
           <div className="space-y-3">
-            <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 text-sm">
+            <div className="border border-volt/40 bg-volt/10 rounded-xl p-4 text-sm">
               <strong>Before Shipment:</strong> You may cancel for a full refund if the order hasn&apos;t shipped. Contact us immediately with your order number.
             </div>
-            <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm">
+            <div className="border border-signal/40 bg-signal/10 rounded-xl p-4 text-sm">
               <strong>After Shipment:</strong> Cannot be cancelled. You must follow the return process (subject to our return policy).
             </div>
           </div>
@@ -257,57 +257,57 @@ export default function RefundPolicyPage() {
 
         {/* 7 — Chargebacks */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">7. Chargebacks &amp; Disputes</h2>
-          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 text-sm text-amber-800">
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">7. Chargebacks &amp; Disputes</h2>
+          <div className="border border-signal/40 bg-signal/10 rounded-xl p-5 text-sm text-bone-muted">
             <p className="font-bold mb-2">Important Chargeback Policy</p>
             <p className="mb-3">Filing a chargeback without first contacting us is considered fraud and may result in:</p>
             <ul className="space-y-1.5 ml-1 mb-3">
               {['Immediate account termination', 'Blacklisting from future purchases', 'Legal action to recover costs', 'Reporting to fraud prevention agencies'].map(item => (
-                <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-amber-500 shrink-0 mt-2" />{item}</li>
+                <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-signal shrink-0 mt-2" />{item}</li>
               ))}
             </ul>
-            <p className="font-bold">Please contact us first on <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:underline">WhatsApp</a> or <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:underline">Telegram</a>.</p>
+            <p className="font-bold">Please contact us first on <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a>.</p>
           </div>
         </section>
 
         {/* 8 — Contact */}
         <section>
-          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-4">8. Contact Us for Returns</h2>
+          <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">8. Contact Us for Returns</h2>
           <p className="mb-5">Have questions or need to start a return?</p>
-          <div className="border border-gray-200 rounded-xl p-5 space-y-2 text-sm mb-6">
-            <p><strong>WhatsApp:</strong> <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:underline">+1 512-592-2145</a></p>
-            <p><strong>Telegram:</strong> <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:underline">@cannachem</a></p>
+          <div className="border border-line rounded-xl p-5 space-y-2 text-sm mb-6">
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 512-592-2145</a></p>
+            <p><strong>Telegram:</strong> <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@cannachem</a></p>
             <p><strong>Subject Line:</strong> Return Request - Order #[Your Order Number]</p>
             <p><strong>Response Time:</strong> Within 24 hours</p>
           </div>
-          <div className="bg-gray-50 border border-gray-100 rounded-xl p-5 text-sm">
+          <div className="bg-night-800 border border-line rounded-xl p-5 text-sm">
             <p className="font-bold mb-2">Include in Your Message:</p>
             <ul className="space-y-1.5 ml-1">
               {['Order number', 'Product name and quantity', 'Reason for return', 'Photos of product/damage (if applicable)', 'Preferred resolution (refund or replacement)'].map(item => (
-                <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />{item}</li>
+                <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />{item}</li>
               ))}
             </ul>
           </div>
         </section>
 
         {/* Summary */}
-        <section className="bg-gray-50 border border-gray-100 rounded-xl p-6">
-          <h2 className="text-lg font-black text-gray-900 mb-4">Quick Summary</h2>
+        <section className="bg-night-800 border border-line rounded-xl p-6">
+          <h2 className="font-display text-lg font-extrabold uppercase tracking-wide text-bone mb-4">Quick Summary</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm">
             <div>
-              <p className="font-bold text-gray-900 mb-2">Return Window</p>
+              <p className="font-bold text-bone mb-2">Return Window</p>
               <ul className="space-y-1">
-                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />Defective: 48 hours</li>
-                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />Damaged: 24 hours</li>
-                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />Wrong item: 48 hours</li>
+                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />Defective: 48 hours</li>
+                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />Damaged: 24 hours</li>
+                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />Wrong item: 48 hours</li>
               </ul>
             </div>
             <div>
-              <p className="font-bold text-gray-900 mb-2">Refund Time</p>
+              <p className="font-bold text-bone mb-2">Refund Time</p>
               <ul className="space-y-1">
-                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />Processing: 7-14 days</li>
-                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />Credit card: 5-10 days</li>
-                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-sky-400 shrink-0 mt-2" />Bank transfer: 7-14 days</li>
+                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />Processing: 7-14 days</li>
+                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />Credit card: 5-10 days</li>
+                <li className="flex gap-2"><span className="w-1 h-1 rounded-full bg-volt shrink-0 mt-2" />Bank transfer: 7-14 days</li>
               </ul>
             </div>
           </div>
@@ -315,9 +315,9 @@ export default function RefundPolicyPage() {
       </article>
 
       {/* Navigation */}
-      <div className="container mx-auto px-6 pb-16 max-w-3xl flex justify-between">
-        <Link href="/shipping" className="text-sm font-bold text-gray-900 hover:text-sky-500 transition-colors">&larr; Shipping Policy</Link>
-        <Link href="/" className="text-sm font-bold bg-sky-500 hover:bg-sky-600 text-white px-6 py-2.5 rounded-xl transition-colors">Back to Home</Link>
+      <div className="wrap flex max-w-3xl justify-between pb-16">
+        <Link href="/shipping" className="font-mono text-[11px] uppercase tracking-[0.14em] text-bone-muted transition-colors hover:text-volt">&larr; Shipping Policy</Link>
+        <Link href="/" className="btn-volt">Back to home</Link>
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ function Stars({ value, onSelect, size = 'w-4 h-4' }) {
           className={onSelect ? 'cursor-pointer' : 'cursor-default'}
           aria-label={onSelect ? `Rate ${i} star${i > 1 ? 's' : ''}` : undefined}
         >
-          <FaStar className={`${size} ${i <= value ? 'text-amber-400' : 'text-gray-200'} ${onSelect ? 'hover:scale-110 transition-transform' : ''}`} />
+          <FaStar className={`${size} ${i <= value ? 'text-volt' : 'text-line-strong'} ${onSelect ? 'transition-transform hover:scale-110' : ''}`} />
         </button>
       ))}
     </div>
@@ -62,94 +62,93 @@ export default function ProductReviews({ slug, initialReviews = [], initialRatin
     }
   };
 
-  const inputClass = 'bg-white border border-gray-200 text-gray-900 rounded-xl py-2.5 px-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent placeholder-gray-400 text-sm';
-
   return (
-    <section className="mt-14 max-w-3xl">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-black text-gray-900 tracking-tight">Customer Reviews</h2>
+    <section className="mt-14 max-w-3xl border-t border-line pt-10">
+      <p className="tag mb-4">reviews</p>
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="h-display text-2xl">Buyer reviews</h2>
         <div className="flex items-center gap-2">
           <Stars value={Math.round(avgRating)} />
-          <span className="text-sm text-gray-400">({reviews.length})</span>
+          <span className="font-mono text-[11px] text-bone-faint">({reviews.length})</span>
         </div>
       </div>
 
       {/* Review list */}
       {reviews.length === 0 ? (
-        <p className="text-gray-400 text-sm mb-8">No reviews yet. Be the first to review this product.</p>
+        <p className="mb-10 text-sm text-bone-muted">
+          No reviews yet. Be the first to review this product.
+        </p>
       ) : (
-        <ul className="space-y-4 mb-10">
+        <ul className="mb-10 space-y-4">
           {reviews.map((r, i) => (
-            <li key={r._id || i} className="bg-gray-50 border border-gray-100 rounded-xl p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <FaUserCircle className="w-6 h-6 text-gray-300" />
+            <li key={r._id || i} className="cell p-5">
+              <div className="mb-2.5 flex items-center gap-3">
+                <FaUserCircle className="h-6 w-6 text-line-strong" />
                 <div>
-                  <p className="text-sm font-bold text-gray-900">{r.name}</p>
+                  <p className="text-sm font-bold text-bone">{r.name}</p>
                   <div className="flex items-center gap-2">
                     <Stars value={r.rating} size="w-3 h-3" />
                     {r.createdAt && (
-                      <span className="text-[11px] text-gray-400">
+                      <span className="font-mono text-[10px] text-bone-faint">
                         {new Date(r.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </span>
                     )}
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-gray-900 leading-relaxed">{r.comment}</p>
+              <p className="text-sm leading-relaxed text-bone-muted">{r.comment}</p>
             </li>
           ))}
         </ul>
       )}
 
       {/* Submit form */}
-      <form onSubmit={handleSubmit} className="bg-gray-50 border border-gray-100 rounded-2xl p-6">
-        <h3 className="text-sm font-black text-gray-900 mb-4">Write a Review</h3>
+      <form onSubmit={handleSubmit} className="cell p-6 sm:p-7">
+        <h3 className="mb-5 font-display text-sm font-bold uppercase tracking-wide text-bone">
+          Write a review
+        </h3>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-2.5 rounded-xl text-sm mb-4">{error}</div>
+          <div className="note-signal mb-4">{error}</div>
         )}
         {success && (
-          <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-2.5 rounded-xl text-sm mb-4">
+          <div className="note-volt mb-4">
             Thanks! Your review has been posted.
           </div>
         )}
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           <div>
-            <label className="block text-xs font-bold text-gray-900 mb-1.5">Your Rating</label>
+            <label className="field-label">Your rating</label>
             <Stars value={rating} onSelect={setRating} size="w-5 h-5" />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-900 mb-1.5">Name</label>
+            <label className="field-label">Name</label>
             <input
               type="text"
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className={inputClass}
+              className="field"
               maxLength={60}
             />
           </div>
           <div>
-            <label className="block text-xs font-bold text-gray-900 mb-1.5">Review</label>
+            <label className="field-label">Review</label>
             <textarea
               required
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="Share your experience with this product..."
               rows={4}
-              className={`${inputClass} resize-none`}
+              className="field resize-none"
               maxLength={1000}
             />
           </div>
-          <button
-            type="submit"
-            disabled={submitting}
-            className="bg-sky-500 hover:bg-sky-600 text-white text-sm font-bold px-6 py-2.5 rounded-xl transition-colors disabled:opacity-60 flex items-center gap-2"
-          >
-            {submitting && <FaSpinner className="animate-spin" />}
-            {submitting ? 'Submitting...' : 'Submit Review'}
+          <button type="submit" disabled={submitting} className="btn-volt disabled:opacity-60">
+            {submitting && <FaSpinner className="h-3.5 w-3.5 animate-spin" />}
+            {submitting ? 'Submitting...' : 'Submit review'}
           </button>
         </div>
       </form>

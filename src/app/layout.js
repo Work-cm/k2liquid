@@ -1,4 +1,4 @@
-import { Space_Grotesk, Fraunces } from "next/font/google";
+import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
@@ -13,19 +13,25 @@ import WhatsAppButton from "@/components/common/WhatsAppButton";
 import AuthProvider from "@/components/auth/AuthProvider";
 import CartProvider from "@/components/cart/CartProvider";
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ['600', '700', '800'],
+  display: 'swap',
+  variable: '--font-display',
+});
+
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ['400', '500', '600', '700'],
   display: 'swap',
-  preload: true,
+  variable: '--font-body',
 });
 
-const fraunces = Fraunces({
+const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ['400', '600', '700', '900'],
+  weight: ['400', '500', '600'],
   display: 'swap',
-  preload: false,
-  variable: '--font-display',
+  variable: '--font-mono',
 });
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
@@ -33,17 +39,18 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com'
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: 'K2LiquidStore | K2 Paper Sheets, K2 Liquid Spray, K2 Powder & Etomidate',
+    default: 'K2LiquidStore | K2 Paper, Liquid Spray, Powder, Etomidate & K-Pods',
     template: '%s | K2LiquidStore',
   },
-  description: 'Buy K2 paper sheets, K2 liquid spray, cannabinoid K2 powder and research-grade etomidate online at K2LiquidStore.com. Premium quality, discreet packaging and fast worldwide shipping.',
+  description: 'Buy K2 paper sheets, K2 liquid spray, cannabinoid K2 powder, research-grade etomidate, vapes and K-Pods online at K2LiquidStore.com. Premium quality and discreet worldwide shipping.',
   keywords: [
     'k2 paper sheets', 'k2 paper', 'k2 liquid spray', 'k2 spray', 'k2 powder',
     'cannabinoids k2 powder', 'k2 spice', 'k2 spice paper',
     'etomidate', 'etomidate powder', 'etomidate for sale', 'buy etomidate',
+    'etomidate vape', 'k-pods', 'etomidate k-pods', 'vape pods',
     'buy k2 online', 'k2 for sale', 'k2liquidstore',
   ],
-  other: { 'theme-color': '#0b120e' },
+  other: { 'theme-color': '#0c0a2a' },
   robots: {
     index: true,
     follow: true,
@@ -60,21 +67,21 @@ export const metadata = {
     locale: 'en_US',
     url: BASE_URL,
     siteName: 'K2LiquidStore',
-    title: 'K2LiquidStore | K2 Paper Sheets, K2 Liquid Spray, K2 Powder & Etomidate',
-    description: 'Premium K2 paper sheets, K2 liquid spray, K2 powder and research-grade etomidate. Worldwide discreet shipping.',
+    title: 'K2LiquidStore | K2 Paper, Liquid Spray, Powder, Etomidate & K-Pods',
+    description: 'Premium K2 paper sheets, K2 liquid spray, K2 powder, research-grade etomidate and K-Pods. Worldwide discreet shipping.',
     images: [
       {
         url: `${BASE_URL}/images/logo.png`,
         width: 1200,
         height: 630,
-        alt: 'K2LiquidStore — K2 Paper, Spray, Powder & Etomidate',
+        alt: 'K2LiquidStore — K2 Paper, Spray, Powder, Etomidate & K-Pods',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'K2LiquidStore | K2 Paper Sheets, K2 Liquid Spray, K2 Powder & Etomidate',
-    description: 'Premium K2 paper sheets, K2 liquid spray, K2 powder and research-grade etomidate. Worldwide discreet shipping.',
+    title: 'K2LiquidStore | K2 Paper, Liquid Spray, Powder, Etomidate & K-Pods',
+    description: 'Premium K2 paper sheets, K2 liquid spray, K2 powder, research-grade etomidate and K-Pods. Worldwide discreet shipping.',
     images: [`${BASE_URL}/images/logo.png`],
   },
   icons: {
@@ -107,10 +114,10 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${spaceGrotesk.className} ${fraunces.variable} font-sans min-h-screen flex flex-col`}>
+      <body className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable} font-sans min-h-screen flex flex-col`}>
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-sky-500 focus:text-white focus:px-4 focus:py-2 focus:rounded"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-volt focus:text-volt-ink focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase"
         >
           Skip to main content
         </a>
@@ -118,7 +125,14 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <CartProvider>
             <VisitorTracker />
-            <Toaster position="top-center" />
+            <Toaster
+              position="bottom-center"
+              toastOptions={{
+                style: { background: '#161244', color: '#f2f2ee', border: '1px solid #332c78', borderRadius: 0, fontSize: 13 },
+                success: { iconTheme: { primary: '#d8ff3c', secondary: '#1a2200' } },
+                error: { iconTheme: { primary: '#ff6a2b', secondary: '#07061c' } },
+              }}
+            />
             <WhatsAppButton />
             <ConditionalNavbar>
               <Navbar />

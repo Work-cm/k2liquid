@@ -44,84 +44,86 @@ function CheckoutSuccessContent() {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-white pt-24 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sky-500" />
+      <div className="flex min-h-screen items-center justify-center bg-night-900">
+        <span className="loader h-10 w-10" />
       </div>
     );
   }
-  
+
   return (
-    <div className="min-h-screen bg-white pt-24 pb-20">
-      <div className="container mx-auto px-4 max-w-2xl">
+    <div className="min-h-screen bg-night-900 pb-20">
+      <div className="wrap max-w-2xl py-16">
         {/* Success card */}
-        <div className="bg-gray-50/60 border border-gray-700/50 rounded-2xl overflow-hidden shadow-xl">
-          {/* Green banner */}
-          <div className="bg-gradient-to-r from-sky-600 to-sky-500 px-8 py-10 text-center">
-            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FaCheckCircle className="text-white text-3xl" />
+        <div className="cell overflow-hidden">
+          {/* Volt banner */}
+          <div className="bg-volt px-8 py-10 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center border-2 border-volt-ink bg-night-950">
+              <FaCheckCircle className="text-3xl text-volt" />
             </div>
-            <h1 className="text-2xl font-extrabold text-gray-900 mb-1">Order Confirmed!</h1>
-            <p className="text-sky-100 text-sm">Thank you for your order. We&apos;ve received it and will be in touch shortly.</p>
+            <h1 className="font-display text-3xl font-extrabold uppercase tracking-[-0.02em] text-volt-ink">
+              Order confirmed
+            </h1>
+            <p className="mt-1 text-sm font-medium text-volt-ink/80">
+              Thank you for your order. We&apos;ve received it and will be in touch shortly.
+            </p>
           </div>
 
-          <div className="p-6 space-y-6">
+          <div className="space-y-7 p-6 sm:p-8">
             {/* Order details */}
             <div>
-              <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">Order Details</h2>
-              <div className="bg-gray-100/60 border border-gray-700/50 rounded-xl p-4 grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs text-gray-900 mb-0.5">Order Number</p>
-                  <p className="text-gray-900 font-semibold text-sm">{order.orderNumber}</p>
+              <h2 className="field-label mb-3">Order details</h2>
+              <div className="grid grid-cols-2 gap-px border border-line bg-line">
+                <div className="bg-night-800 p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-bone-faint">Order number</p>
+                  <p className="mt-1 text-sm font-semibold text-bone">{order.orderNumber}</p>
                 </div>
-                <div>
-                  <p className="text-xs text-gray-900 mb-0.5">Date</p>
-                  <p className="text-gray-900 font-semibold text-sm">{new Date(order.createdAt).toLocaleDateString()}</p>
+                <div className="bg-night-800 p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-bone-faint">Date</p>
+                  <p className="mt-1 text-sm font-semibold text-bone">{new Date(order.createdAt).toLocaleDateString()}</p>
                 </div>
-                <div>
-                  <p className="text-xs text-gray-900 mb-0.5">Total</p>
-                  <p className="text-gray-900 font-semibold text-sm">&euro;{order.totalPrice.toFixed(2)}</p>
+                <div className="bg-night-800 p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-bone-faint">Total</p>
+                  <p className="mt-1 text-sm font-semibold text-bone">&euro;{order.totalPrice.toFixed(2)}</p>
                 </div>
-                <div>
-                  <p className="text-xs text-gray-900 mb-0.5">Status</p>
-                  <p className="text-sky-400 font-semibold text-sm capitalize">{order.status}</p>
+                <div className="bg-night-800 p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-bone-faint">Status</p>
+                  <p className="mt-1 text-sm font-semibold capitalize text-volt">{order.status}</p>
                 </div>
               </div>
             </div>
 
             {/* Next steps */}
             <div>
-              <h2 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-3">What&apos;s Next?</h2>
+              <h2 className="field-label mb-3">What&apos;s next?</h2>
               <div className="space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
-                    <FaBox className="text-sky-400 text-xs" />
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center border border-line-strong bg-night-800">
+                    <FaBox className="text-xs text-volt" />
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">Order Processing</p>
-                    <p className="text-gray-900 text-xs mt-0.5">Your order is being reviewed and will be dispatched shortly.</p>
+                    <p className="text-sm font-medium text-bone">Order processing</p>
+                    <p className="mt-0.5 text-xs text-bone-muted">Your order is being reviewed and will be dispatched shortly.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center flex-shrink-0">
-                    <FaClipboardList className="text-sky-400 text-xs" />
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center border border-line-strong bg-night-800">
+                    <FaClipboardList className="text-xs text-volt" />
                   </div>
                   <div>
-                    <p className="text-white text-sm font-medium">Email Updates</p>
-                    <p className="text-gray-900 text-xs mt-0.5">You will receive status updates via email as your order progresses.</p>
+                    <p className="text-sm font-medium text-bone">Status updates</p>
+                    <p className="mt-0.5 text-xs text-bone-muted">You will receive updates on WhatsApp or Telegram as your order progresses.</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-2">
-              <Link href="/"
-                className="flex-1 flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-700 border border-gray-700 text-gray-900 font-semibold py-3 px-5 rounded-xl transition-colors text-sm">
-                <FaHome className="text-xs" /> Continue Shopping
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row">
+              <Link href="/" className="btn-ghost flex-1">
+                <FaHome className="h-3.5 w-3.5" /> Continue shopping
               </Link>
-              <Link href="/account/orders"
-                className="flex-1 flex items-center justify-center gap-2 bg-sky-500 hover:bg-sky-500 text-gray-900 font-semibold py-3 px-5 rounded-xl transition-all hover:-translate-y-0.5 shadow-lg shadow-sky-800/30 text-sm">
-                <FaClipboardList className="text-xs" /> View My Orders
+              <Link href="/account/orders" className="btn-volt flex-1">
+                <FaClipboardList className="h-3.5 w-3.5" /> View my orders
               </Link>
             </div>
           </div>
@@ -134,8 +136,8 @@ function CheckoutSuccessContent() {
 export default function CheckoutSuccessPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-sky-500" />
+      <div className="flex min-h-screen items-center justify-center bg-night-900">
+        <span className="loader h-10 w-10" />
       </div>
     }>
       <CheckoutSuccessContent />
