@@ -1,4 +1,3 @@
-import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 
@@ -12,27 +11,6 @@ import WhatsAppButton from "@/components/common/WhatsAppButton";
 // Providers
 import AuthProvider from "@/components/auth/AuthProvider";
 import CartProvider from "@/components/cart/CartProvider";
-
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ['600', '700', '800'],
-  display: 'swap',
-  variable: '--font-display',
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
-  variable: '--font-body',
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ['400', '500', '600'],
-  display: 'swap',
-  variable: '--font-mono',
-});
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
 
@@ -113,8 +91,12 @@ export default function RootLayout({ children }) {
         <link rel="alternate icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable} font-sans min-h-screen flex flex-col`}>
+      <body className="font-sans min-h-screen flex flex-col">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-volt focus:text-volt-ink focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase"

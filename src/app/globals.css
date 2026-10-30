@@ -10,6 +10,9 @@
   --muted: #a3a3ad;
   --volt: #d8ff3c;
   --signal: #ff6a2b;
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 html {
