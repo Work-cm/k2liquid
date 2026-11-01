@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { FaTelegramPlane, FaWhatsapp, FaBitcoin } from 'react-icons/fa';
+import { FaWhatsapp, FaBitcoin } from 'react-icons/fa';
 import { HiOutlineArrowRight, HiOutlineArrowUpRight } from 'react-icons/hi2';
 import { LogoMark } from '@/components/common/Logo';
 
@@ -71,7 +71,7 @@ export default function Footer() {
             </form>
           </div>
 
-          <div className="p-8 lg:p-12 grid sm:grid-cols-2 gap-6">
+          <div className="p-8 lg:p-12 grid gap-6">
             <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="group cell cell-hover p-5 flex flex-col justify-between min-h-[140px]">
               <FaWhatsapp className="text-volt text-xl" />
               <div>
@@ -79,14 +79,7 @@ export default function Footer() {
                 <p className="text-bone font-semibold mt-1 flex items-center gap-2">+1 512-592-2145 <HiOutlineArrowUpRight className="text-bone-faint group-hover:text-volt" size={14} /></p>
               </div>
             </a>
-            <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="group cell cell-hover p-5 flex flex-col justify-between min-h-[140px]">
-              <FaTelegramPlane className="text-volt text-xl" />
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint">Telegram</p>
-                <p className="text-bone font-semibold mt-1 flex items-center gap-2">@cannachem <HiOutlineArrowUpRight className="text-bone-faint group-hover:text-volt" size={14} /></p>
-              </div>
-            </a>
-            <div className="sm:col-span-2 border border-line p-5 flex items-center gap-4">
+            <div className="border border-line p-5 flex items-center gap-4">
               <FaBitcoin className="text-signal text-2xl shrink-0" />
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint">Payment</p>
