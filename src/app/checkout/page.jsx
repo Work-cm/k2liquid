@@ -96,7 +96,7 @@ export default function CheckoutPage() {
                 Questions about your order? Our team is here to assist.
               </p>
               <a
-                href="https://wa.me/15125922145"
+                href="https://wa.me/13468721280"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.14em] text-volt transition-colors hover:text-bone"

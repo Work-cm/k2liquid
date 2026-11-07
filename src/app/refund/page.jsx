@@ -266,7 +266,7 @@ export default function RefundPolicyPage() {
                 <li key={item} className="flex gap-2"><span className="w-1 h-1 rounded-full bg-signal shrink-0 mt-2" />{item}</li>
               ))}
             </ul>
-            <p className="font-bold">Please contact us first on <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a>.</p>
+            <p className="font-bold">Please contact us first on <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a>.</p>
           </div>
         </section>
 
@@ -275,8 +275,8 @@ export default function RefundPolicyPage() {
           <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">8. Contact Us for Returns</h2>
           <p className="mb-5">Have questions or need to start a return?</p>
           <div className="border border-line rounded-xl p-5 space-y-2 text-sm mb-6">
-            <p><strong>WhatsApp:</strong> <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 512-592-2145</a></p>
-            <p><strong>Telegram:</strong> <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@cannachem</a></p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 346-872-1280</a></p>
+            <p><strong>Telegram:</strong> <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@Zhong5cla</a></p>
             <p><strong>Subject Line:</strong> Return Request - Order #[Your Order Number]</p>
             <p><strong>Response Time:</strong> Within 24 hours</p>
           </div>

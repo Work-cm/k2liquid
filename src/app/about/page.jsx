@@ -176,7 +176,7 @@ export default function AboutPage() {
             <Link href="/products" className="btn-volt group">
               Browse products <HiOutlineArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
             </Link>
-            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+            <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="btn-ghost">
               Contact us
             </a>
           </div>

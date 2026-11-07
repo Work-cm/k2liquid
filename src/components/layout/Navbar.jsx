@@ -268,8 +268,8 @@ export default function Navbar() {
               </div>
 
               <div className="px-5 pb-6 grid grid-cols-2 gap-3">
-                <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaWhatsapp /> WhatsApp</a>
-                <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaTelegramPlane /> Telegram</a>
+                <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaWhatsapp /> WhatsApp</a>
+                <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="btn-ghost"><FaTelegramPlane /> Telegram</a>
               </div>
             </div>
 

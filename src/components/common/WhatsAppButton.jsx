@@ -5,8 +5,8 @@ import { HiOutlineChatBubbleLeftRight } from 'react-icons/hi2';
 import { useState } from 'react';
 
 export default function WhatsAppButton() {
-  const whatsappUrl = 'https://wa.me/15125922145';
-  const telegramUrl = 'https://t.me/cannachem';
+  const whatsappUrl = 'https://wa.me/13468721280';
+  const telegramUrl = 'https://t.me/Zhong5cla';
   const [open, setOpen] = useState(false);
 
   return (

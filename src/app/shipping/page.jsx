@@ -214,8 +214,8 @@ export default function ShippingPolicyPage() {
 
           <div className="border border-volt/30 bg-volt/5 rounded-xl p-4 text-sm text-bone mb-6">
             <strong>Shipping Restrictions:</strong> Please message us on{' '}
-            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="underline">WhatsApp</a> or{' '}
-            <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="underline">Telegram</a>{' '}
+            <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="underline">WhatsApp</a> or{' '}
+            <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="underline">Telegram</a>{' '}
             to verify if we can ship to your country before placing an order.
           </div>
 
@@ -246,7 +246,7 @@ export default function ShippingPolicyPage() {
             <li>Look for delivery notices or alternative drop-off locations</li>
             <li>Wait 24 hours as carriers sometimes mark packages delivered early</li>
             <li>Contact the shipping carrier directly with your tracking number</li>
-            <li>If still missing after 48 hours, contact us on <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a></li>
+            <li>If still missing after 48 hours, contact us on <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a></li>
           </ol>
           <div className="border border-signal/40 bg-signal/10 rounded-xl p-4 text-sm text-bone-muted mb-6">
             <strong>Note:</strong> We are not responsible for packages stolen after delivery confirmation. Consider using a secure delivery location.
@@ -309,8 +309,8 @@ export default function ShippingPolicyPage() {
           <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">8. Shipping Support</h2>
           <p className="mb-5">Need help with your shipment? We&apos;re here to assist:</p>
           <div className="border border-line rounded-xl p-5 space-y-2 text-sm mb-6">
-            <p><strong>WhatsApp:</strong> <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 512-592-2145</a></p>
-            <p><strong>Telegram:</strong> <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@cannachem</a></p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 346-872-1280</a></p>
+            <p><strong>Telegram:</strong> <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@Zhong5cla</a></p>
             <p><strong>Response Time:</strong> Within 24 hours</p>
             <p className="text-bone-faint text-xs pt-2">Please include your order number and tracking information when contacting us about shipping issues.</p>
           </div>

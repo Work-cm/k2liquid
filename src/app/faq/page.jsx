@@ -316,10 +316,10 @@ export default function FAQPage() {
           <h2 className="h-display mb-2 text-xl">Still have questions?</h2>
           <p className="mb-6 text-sm text-bone-muted">Our support team typically responds within 24 hours.</p>
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
-            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="btn-volt">
+            <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="btn-volt">
               <FaWhatsapp className="h-4 w-4" /> WhatsApp us
             </a>
-            <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="btn-ghost">
+            <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="btn-ghost">
               <FaTelegramPlane className="h-4 w-4" /> Telegram us
             </a>
           </div>

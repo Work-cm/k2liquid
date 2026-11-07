@@ -72,11 +72,11 @@ export default function Footer() {
           </div>
 
           <div className="p-8 lg:p-12 grid gap-6">
-            <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="group cell cell-hover p-5 flex flex-col justify-between min-h-[140px]">
+            <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="group cell cell-hover p-5 flex flex-col justify-between min-h-[140px]">
               <FaWhatsapp className="text-volt text-xl" />
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-bone-faint">WhatsApp</p>
-                <p className="text-bone font-semibold mt-1 flex items-center gap-2">+1 512-592-2145 <HiOutlineArrowUpRight className="text-bone-faint group-hover:text-volt" size={14} /></p>
+                <p className="text-bone font-semibold mt-1 flex items-center gap-2">+1 346-872-1280 <HiOutlineArrowUpRight className="text-bone-faint group-hover:text-volt" size={14} /></p>
               </div>
             </a>
             <div className="border border-line p-5 flex items-center gap-4">

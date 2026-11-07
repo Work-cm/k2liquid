@@ -361,7 +361,7 @@ function CTASlab() {
             Shop now <FiArrowRight className="h-4 w-4" />
           </Link>
           <a
-            href="https://wa.me/15125922145"
+            href="https://wa.me/13468721280"
             target="_blank"
             rel="noopener noreferrer"
             className="btn border-volt-ink/40 bg-transparent text-volt-ink hover:border-volt-ink hover:bg-volt-ink hover:text-volt"

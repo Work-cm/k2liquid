@@ -114,7 +114,7 @@ export default function PrivacyPolicyPage() {
           <ul className="space-y-2 ml-1 mb-4">
             {['Right to know what personal information is collected','Right to know if personal information is sold or disclosed','Right to opt-out of sale of personal information','Right to non-discrimination for exercising your rights'].map(i=><li key={i} className="flex gap-3"><Dot /><span>{i}</span></li>)}
           </ul>
-          <p>To exercise your rights, contact us on <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a>.</p>
+          <p>To exercise your rights, contact us on <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">WhatsApp</a> or <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">Telegram</a>.</p>
         </section>
 
         <section>
@@ -150,8 +150,8 @@ export default function PrivacyPolicyPage() {
           <h2 className="mb-4 font-display text-2xl font-extrabold tracking-tight text-bone">13. Contact Us</h2>
           <p className="mb-5">Questions about this Privacy Policy? Contact us:</p>
           <div className="border border-line rounded-xl p-5 space-y-2 text-sm">
-            <p><strong>WhatsApp:</strong> <a href="https://wa.me/15125922145" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 512-592-2145</a></p>
-            <p><strong>Telegram:</strong> <a href="https://t.me/cannachem" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@cannachem</a></p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/13468721280" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">+1 346-872-1280</a></p>
+            <p><strong>Telegram:</strong> <a href="https://t.me/Zhong5cla" target="_blank" rel="noopener noreferrer" className="text-volt hover:underline">@Zhong5cla</a></p>
             <p><strong>Response Time:</strong> We aim to respond within 48 hours</p>
           </div>
         </section>
