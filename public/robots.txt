@@ -24,4 +24,4 @@ Disallow: /login
 Disallow: /account
 Disallow: /account/*
 
-Sitemap: https://k2liquidstore.com/sitemap.xml
+Sitemap: https://www.k2paperk2liquid.com/sitemap.xml

@@ -218,7 +218,22 @@ export default function FAQPage() {
     return matchesCategory && matchesSearch;
   });
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    })),
+  };
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
     <div className="min-h-screen bg-night-900 pb-20">
       <div className="wrap max-w-4xl py-12 sm:py-16">
         {/* Breadcrumb */}
@@ -344,5 +359,6 @@ export default function FAQPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -1,5 +1,5 @@
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com'),
   title: 'FAQ | Buy K2, Etomidate & K-Pods Online',
   description: 'Get answers about buying K2 paper sheets, K2 liquid spray, K2 powder, etomidate, vapes and K-Pods online, shipping, payments and product quality at K2LiquidStore.',
   keywords: [

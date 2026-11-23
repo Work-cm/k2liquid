@@ -14,14 +14,14 @@ export const secondaryKeywords = [
   'synthetic cannabinoids',
   'research chemicals',
   'k2liquidstore',
-  'k2liquidstore.com',
+  'k2paperk2liquid.com',
 ];
 
 export const allKeywords = [...primaryKeywords, ...secondaryKeywords];
 
 // Schema.org structured data for better SEO
 export const getProductSchema = (product) => {
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com';
   const absoluteUrl = (path) => {
     if (!path) return `${BASE_URL}/images/logo.png`;
     return path.startsWith('http') ? path : `${BASE_URL}${path}`;
@@ -61,7 +61,7 @@ export const getProductSchema = (product) => {
 
 // Get base URL for schemas
 const getBaseUrl = () => {
-  return process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
+  return process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com';
 };
 
 // Organization schema
@@ -78,7 +78,7 @@ export const getOrganizationSchema = () => ({
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer support',
-    email: 'order@k2liquidstore.com',
+    email: 'order@k2paperk2liquid.com',
     availableLanguage: 'English',
   },
   sameAs: [],
@@ -118,3 +118,15 @@ export default function SEOKeywords() {
     </>
   );
 }
+
+// BreadcrumbList schema for product/category pages
+export const getBreadcrumbSchema = (items) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: `${getBaseUrl()}${item.path}`,
+  })),
+});

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { FaShippingFast, FaGlobeAmericas, FaShieldAlt, FaCheckCircle } from 'react-icons/fa';
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com'),
   title: 'Shipping & Delivery Policy',
   description: 'Learn about K2LiquidStore shipping methods, delivery times, discreet international shipping, order tracking and free shipping on orders over €100 for K2 paper, spray, powder and etomidate.',
   keywords: [

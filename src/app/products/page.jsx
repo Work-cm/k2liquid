@@ -18,7 +18,7 @@ export async function generateMetadata({ searchParams }) {
   const params = await searchParams;
   const category = params?.category || '';
   
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com';
   const catKey = category.toLowerCase();
   const catLabel = categoryMeta[catKey]?.label || category;
   const canonicalPath = catKey

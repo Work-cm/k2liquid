@@ -5,7 +5,7 @@ import dbConnect from '@/lib/utils/db';
 import Product from '@/models/Product';
 import ProductDetail from '@/components/product/ProductDetail';
 import ProductCard from '@/components/product/ProductCard';
-import { getProductSchema } from '@/components/seo/SEOKeywords';
+import { getProductSchema, getBreadcrumbSchema } from '@/components/seo/SEOKeywords';
 
 export const dynamic = 'force-dynamic';
 
@@ -71,7 +71,7 @@ export async function generateMetadata({ params }) {
     return { title: 'Product Not Found' };
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com';
   const absoluteImage = product.images?.[0]?.startsWith('http')
     ? product.images[0]
     : `${baseUrl}${product.images?.[0] || '/images/logo.png'}`;
@@ -109,6 +109,12 @@ export default async function ProductPage({ params }) {
 
   const relatedProducts = await getRelatedProducts(product.category, product._id);
   const productSchema = getProductSchema(product);
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    { name: product.category, path: `/products?category=${encodeURIComponent(product.category)}` },
+    { name: product.name, path: `/products/${product.slug}` },
+  ]);
 
   return (
     <div className="min-h-screen bg-night-900">
@@ -116,6 +122,11 @@ export default async function ProductPage({ params }) {
         id={`schema-product-${product.slug}`}
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <Script
+        id={`schema-breadcrumb-${product.slug}`}
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <ProductDetail product={product} />
 

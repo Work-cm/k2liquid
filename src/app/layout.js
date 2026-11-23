@@ -12,7 +12,7 @@ import WhatsAppButton from "@/components/common/WhatsAppButton";
 import AuthProvider from "@/components/auth/AuthProvider";
 import CartProvider from "@/components/cart/CartProvider";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://k2liquidstore.com';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.k2paperk2liquid.com';
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),

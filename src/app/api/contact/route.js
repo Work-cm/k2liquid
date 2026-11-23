@@ -232,8 +232,8 @@ Reply directly to this email to respond to ${name}.
       <p><strong>K2LiquidStore</strong> - K2 Paper, Spray & Powder</p>
       <p>This email was sent from your website contact form</p>
       <p style="margin-top: 10px;">
-        <a href="https://k2liquidstore.com" style="color: #dc2626; text-decoration: none;">Visit Website</a> |
-        <a href="https://k2liquidstore.com/admin" style="color: #dc2626; text-decoration: none;">Admin Dashboard</a>
+        <a href="https://www.k2paperk2liquid.com" style="color: #dc2626; text-decoration: none;">Visit Website</a> |
+        <a href="https://www.k2paperk2liquid.com/admin" style="color: #dc2626; text-decoration: none;">Admin Dashboard</a>
       </p>
     </div>
   </div>
@@ -274,7 +274,7 @@ The K2LiquidStore Team
 
 ---
 K2LiquidStore - K2 Paper, Spray & Powder
-Website: https://k2liquidstore.com
+Website: https://www.k2paperk2liquid.com
           `,
           html: `
 <!DOCTYPE html>
@@ -473,9 +473,9 @@ Website: https://k2liquidstore.com
       <p style="margin-top: 10px;">This is an automated confirmation email.</p>
       
       <div class="footer-links">
-        <a href="https://k2liquidstore.com">Visit Website</a> |
-        <a href="https://k2liquidstore.com/products">Browse Products</a> |
-        <a href="https://k2liquidstore.com/about">About Us</a>
+        <a href="https://www.k2paperk2liquid.com">Visit Website</a> |
+        <a href="https://www.k2paperk2liquid.com/products">Browse Products</a> |
+        <a href="https://www.k2paperk2liquid.com/about">About Us</a>
       </div>
 
       <p style="margin-top: 15px; font-size: 11px; color: #999;">

@@ -18,7 +18,7 @@ export async function GET(request) {
     if (!email) {
       return NextResponse.json({ 
         message: 'Email parameter is required',
-        example: '/api/setup/remove-admin?email=admin@k2liquidstore.com'
+        example: '/api/setup/remove-admin?email=admin@k2paperk2liquid.com'
       }, { status: 400 });
     }
     
